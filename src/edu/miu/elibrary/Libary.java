@@ -4,6 +4,8 @@
  */
 package edu.miu.elibrary;
 
+import edu.miu.elibrary.controller.SystemController;
+
 /**
  *
  * @author Kuylim Tith
@@ -16,6 +18,8 @@ public class Libary {
     public static void main(String[] args) {
         // TODO code application logic here
         System.out.println("Initial Project");
+        SystemController controller = new SystemController();
+        controller.getAllBooks();
     }
     
 }
