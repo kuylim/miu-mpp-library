@@ -18,6 +18,12 @@ public class Person implements Serializable {
 
     public Person() {}
 
+    public Person(String firstName, String lastName, String phoneNumber) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phoneNumber = phoneNumber;
+    }
+
     public Person(String firstName, String lastName, String phoneNumber, Address address) {
         this.firstName = firstName;
         this.lastName = lastName;

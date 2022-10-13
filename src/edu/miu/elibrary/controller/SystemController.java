@@ -1,5 +1,6 @@
 package edu.miu.elibrary.controller;
 
+import edu.miu.elibrary.business.Address;
 import edu.miu.elibrary.business.Book;
 import edu.miu.elibrary.business.LibraryMember;
 import edu.miu.elibrary.dataaccess.DataAccessFacade;
@@ -44,6 +45,16 @@ public class SystemController {
         return false;
     }
 
+    public Address createAddress(String street, String city, String state, String zip) {
+        return new Address(street, city, state, zip);
+    }
+
+    // ========== Library Member
+
+    public void loadAllLibraryMember() {
+        libraryMembers = dataAccess.readMemberMap().values().stream().toList();
+    }
+
     public DefaultListModel<LibraryMember> getLibraryMemberListModel() {
         DefaultListModel<LibraryMember> listModel = new DefaultListModel<>();
         libraryMembers = dataAccess.readMemberMap().values().stream().toList();
@@ -53,7 +64,22 @@ public class SystemController {
         return listModel;
     }
 
-    public LibraryMember getLibraryMemberById(String id) {
+    public LibraryMember createLibraryMember(String firstName, String lastName, String phoneNumber) {
+        String id = String.valueOf(libraryMembers.size() + 1 + 1000);
+        return new LibraryMember(id, firstName, lastName, phoneNumber);
+    }
+
+    public void addLibraryMember(LibraryMember member) {
+        dataAccess.saveNewMember(member);
+        loadAllLibraryMember();
+    }
+
+    public void updateLibraryMember() {
+        // todo
+    }
+
+    // ========== Library Member
+    public Book createBook() {
         return null;
     }
 }

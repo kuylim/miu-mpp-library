@@ -9,7 +9,5 @@ b
 2src/edu/miu/elibrary/security/SecurityContext.java,7\c\7cee7794b8184ac0f62ee537851da18bc562ee5a
 \
 ,src/edu/miu/elibrary/security/Principal.java,1\0\1094b671d73d18ab3efd6acfd501c6926dac8357
-Z
-*src/edu/miu/elibrary/ui/AddMemberView.java,0\5\056d51a4c3ec9442a0e0953339dbc4618d70f447
 V
 &src/edu/miu/elibrary/ui/LoginView.form,7\8\78d047d316334fc70ba936df53b1b411cf1ad937
