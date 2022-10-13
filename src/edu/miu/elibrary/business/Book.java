@@ -15,6 +15,7 @@ public class Book implements Serializable {
     private String isbn;
     private String title;
     private int numberOfCopy;
+    private int maxCheckoutLength;
     private List<Author> authors;
     private List<BookCopy> bookCopies;
 
@@ -63,6 +64,14 @@ public class Book implements Serializable {
 
     public void setBookCopies(List<BookCopy> bookCopies) {
         this.bookCopies = bookCopies;
+    }
+
+    public int getMaxCheckoutLength() {
+        return maxCheckoutLength;
+    }
+
+    public void setMaxCheckoutLength(int maxCheckoutLength) {
+        this.maxCheckoutLength = maxCheckoutLength;
     }
 
     public void addCopy() {

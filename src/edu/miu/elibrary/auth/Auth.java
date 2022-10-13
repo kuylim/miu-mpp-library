@@ -1,4 +1,4 @@
-package edu.miu.elibrary.dataaccess;
+package edu.miu.elibrary.auth;
 
 import java.io.Serializable;
 

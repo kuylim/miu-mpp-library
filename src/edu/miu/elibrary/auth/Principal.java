@@ -1,6 +1,6 @@
-package edu.miu.elibrary.security;
+package edu.miu.elibrary.auth;
 
-import edu.miu.elibrary.dataaccess.Auth;
+import edu.miu.elibrary.auth.Auth;
 
 /**
  * Author: Kuylim TITH

@@ -4,7 +4,7 @@
  */
 package edu.miu.elibrary;
 
-import edu.miu.elibrary.security.SecurityContext;
+import edu.miu.elibrary.auth.SecurityContext;
 import edu.miu.elibrary.ui.LoginView;
 import edu.miu.elibrary.ui.MainView;
 

@@ -1,16 +1,16 @@
 package edu.miu.elibrary.controller;
 
+import edu.miu.elibrary.auth.User;
 import edu.miu.elibrary.business.Address;
 import edu.miu.elibrary.business.Book;
 import edu.miu.elibrary.business.LibraryMember;
 import edu.miu.elibrary.dataaccess.DataAccessFacade;
-import edu.miu.elibrary.dataaccess.User;
-import edu.miu.elibrary.security.Principal;
-import edu.miu.elibrary.security.SecurityContext;
+import edu.miu.elibrary.auth.Principal;
+import edu.miu.elibrary.auth.SecurityContext;
 
 import javax.swing.*;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Author: Kuylim TITH
@@ -26,7 +26,7 @@ public class SystemController {
     }
 
     public List<Book> getAllBooks() {
-        System.out.println(new ArrayList<>(dataAccess.readBooksMap().values()));
+        //  System.out.println(new ArrayList<>(dataAccess.readBooksMap().values()));
         return null;
     }
 
@@ -35,12 +35,13 @@ public class SystemController {
     }
 
     public boolean login(String username, String password) {
-        List<User> users = dataAccess.readUserMap().values().stream().toList();
-        for (User user : users) {
-            if (username.equals(user.getId()) && password.equals(user.getPassword())) {
-                SecurityContext.principal = new Principal(user.getAuthorization(), user.getId());
-                return true;
-            }
+        User user = dataAccess.findUserByUsername(username);
+        if (Objects.isNull(user)) {
+            throw new RuntimeException("Invalid user account");
+        }
+        if (password.equals(user.getPassword())) {
+            SecurityContext.principal = new Principal(user.getAuth(), user.getUsername());
+            return true;
         }
         return false;
     }
@@ -52,16 +53,17 @@ public class SystemController {
     // ========== Library Member
 
     public void loadAllLibraryMember() {
-        libraryMembers = dataAccess.readMemberMap().values().stream().toList();
+        // libraryMembers = dataAccess.readMemberMap().values().stream().toList();
     }
 
     public DefaultListModel<LibraryMember> getLibraryMemberListModel() {
-        DefaultListModel<LibraryMember> listModel = new DefaultListModel<>();
-        libraryMembers = dataAccess.readMemberMap().values().stream().toList();
-        for (LibraryMember libraryMember : libraryMembers) {
-            listModel.addElement(libraryMember);
-        }
-        return listModel;
+//        DefaultListModel<LibraryMember> listModel = new DefaultListModel<>();
+//        libraryMembers = dataAccess.readMemberMap().values().stream().toList();
+//        for (LibraryMember libraryMember : libraryMembers) {
+//            listModel.addElement(libraryMember);
+//        }
+        // return listModel;
+        return null;
     }
 
     public LibraryMember createLibraryMember(String firstName, String lastName, String phoneNumber) {
@@ -70,7 +72,7 @@ public class SystemController {
     }
 
     public void addLibraryMember(LibraryMember member) {
-        dataAccess.saveNewMember(member);
+        // dataAccess.saveNewMember(member);
         loadAllLibraryMember();
     }
 

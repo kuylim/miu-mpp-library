@@ -1,4 +1,4 @@
-package edu.miu.elibrary.security;
+package edu.miu.elibrary.auth;
 
 /**
  * Author: Kuylim TITH

@@ -2,6 +2,7 @@ package edu.miu.elibrary.business;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,7 +12,7 @@ import java.util.List;
 public class CheckoutRecord implements Serializable {
     @Serial
     private static final long serialVersionUID = 3256277186210365358L;
-    List<CheckoutRecordEntry> checkoutRecordEntries;
+    List<CheckoutRecordEntry> checkoutRecordEntries = new ArrayList<>();
 
     public CheckoutRecord() {}
 

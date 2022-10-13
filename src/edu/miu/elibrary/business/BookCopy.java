@@ -12,6 +12,7 @@ public class BookCopy implements Serializable {
     private static final long serialVersionUID = 8743140560302253102L;
 
     private String copyNumber;
+    private String status;
 
     public BookCopy(){}
 
@@ -25,5 +26,13 @@ public class BookCopy implements Serializable {
 
     public void setCopyNumber(String copyNumber) {
         this.copyNumber = copyNumber;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
