@@ -14,8 +14,9 @@ public class MainView extends javax.swing.JFrame {
      */
     public MainView() {
         initComponents();
-        mainTab.addTab("Add Library Member", new AddMemberView());
-        mainTab.addTab("Add Book", new AddBookView());
+        mainTab.addTab("Library Member", new MemberView());
+        mainTab.addTab("Book", new BookView());
+        mainTab.addTab("Checkout", new CheckoutView());
         setLocationRelativeTo(null);
     }
 
@@ -45,8 +46,8 @@ public class MainView extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(mainTab, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(mainTab, javax.swing.GroupLayout.DEFAULT_SIZE, 382, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();

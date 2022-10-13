@@ -12,7 +12,7 @@ import edu.miu.elibrary.controller.SystemController;
  *
  * @author Kuylim Tith
  */
-public class AddMemberView extends javax.swing.JPanel {
+public class MemberView extends javax.swing.JPanel {
 
     private static final String EMPTY = "";
     private final SystemController controller;
@@ -20,7 +20,7 @@ public class AddMemberView extends javax.swing.JPanel {
     /**
      * Creates new form AddMemberView
      */
-    public AddMemberView() {
+    public MemberView() {
         initComponents();
         controller = new SystemController();
         controller.loadAllLibraryMember();
@@ -53,12 +53,19 @@ public class AddMemberView extends javax.swing.JPanel {
         btnSave = new javax.swing.JButton();
 
         jLabel1.setText("Firstname");
+
         jLabel2.setText("Lastname");
+
         jLabel3.setText("Phone Number");
+
         jLabel4.setText("Street");
+
         jLabel5.setText("City");
+
         jLabel6.setText("State");
+
         jLabel7.setText("Zip");
+
         btnReset.setText("Reset");
         btnReset.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
