@@ -9,5 +9,12 @@ public class AddMemberView {
     public void submitMember() {
         //txtfirst
         //txtlast
+        // txt
+        // Member memr = new Memeber();
+        // -> getMember(first, last);
+        // -> member
+        // -> getAddress(state, city);
+        // -> call addMember(member, address)
+        // -> facade
     }
 }

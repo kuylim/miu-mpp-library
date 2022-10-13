@@ -4,10 +4,13 @@
  */
 package edu.miu.elibrary;
 
-import edu.miu.elibrary.controller.SystemController;
+import edu.miu.elibrary.security.SecurityContext;
+import edu.miu.elibrary.ui.LoginView;
+import edu.miu.elibrary.ui.MainView;
+
+import java.util.Objects;
 
 /**
- *
  * @author Kuylim Tith
  */
 public class Libary {
@@ -16,10 +19,12 @@ public class Libary {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
-        System.out.println("Initial Project");
-        SystemController controller = new SystemController();
-        controller.getAllBooks();
+        MainView mainView = new MainView();
+        if (!Objects.isNull(SecurityContext.principal)) {
+            mainView.setVisible(true);
+        } else {
+            LoginView loginView = new LoginView();
+            loginView.setVisible(true);
+        }
     }
-    
 }

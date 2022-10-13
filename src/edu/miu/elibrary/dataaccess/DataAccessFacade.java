@@ -20,7 +20,7 @@ public class DataAccessFacade implements DataAccess {
         BOOKS, MEMBERS, USERS;
     }
 
-    public static final String OUTPUT_DIR = "D:\\Data\\MIU\\MPP Resource\\Assigments\\Assigment\\Library System\\src\\dataaccess\\storage";
+    public static final String OUTPUT_DIR = "D:\\Workspace\\MIU\\MPP Project\\miu-mpp-library\\src\\edu\\miu\\elibrary\\dataaccess\\storage";
     //	public static final String OUTPUT_DIR = System.getProperty("user.dir")
 //			+ "\\src\\dataaccess\\storage";
     public static final String DATE_PATTERN = "MM/dd/yyyy";
