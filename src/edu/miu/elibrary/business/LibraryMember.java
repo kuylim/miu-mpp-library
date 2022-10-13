@@ -1,27 +1,21 @@
 package edu.miu.elibrary.business;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
  * Author: Kuylim TITH
  * Date: 10/12/2022
  */
-public class LibraryMember implements Serializable {
-
-    private final long serialVersionUID = 545264044109559457L;
-
+public class LibraryMember extends Person implements Serializable {
+    @Serial
+    private static final long serialVersionUID = -6565704637202603868L;
     private String memberId;
-    private String firstName;
-    private String lastName;
-    private String phoneNumber;
-    private Address address;
+    private CheckoutRecord checkoutRecord;
 
     public LibraryMember(String memberId, String firstName, String lastName, String phoneNumber, Address address) {
+        super(firstName, lastName, phoneNumber, address);
         this.memberId = memberId;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.phoneNumber = phoneNumber;
-        this.address = address;
     }
 
     public String getMemberId() {
@@ -32,40 +26,16 @@ public class LibraryMember implements Serializable {
         this.memberId = memberId;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public CheckoutRecord getCheckoutRecord() {
+        return checkoutRecord;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public Address getAddress() {
-        return address;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
+    public void setCheckoutRecord(CheckoutRecord checkoutRecord) {
+        this.checkoutRecord = checkoutRecord;
     }
 
     @Override
     public String toString() {
-        return firstName + " " + lastName;
+        return getFirstName() + " " + getLastName();
     }
 }

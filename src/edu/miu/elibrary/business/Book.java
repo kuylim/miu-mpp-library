@@ -1,5 +1,6 @@
 package edu.miu.elibrary.business;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
 
@@ -8,13 +9,14 @@ import java.util.List;
  * Date: 10/12/2022
  */
 public class Book implements Serializable {
-    
-    private final long serialVersionUID = 7080962269839330692L;
 
+    @Serial
+    private static final long serialVersionUID = -974228997834827410L;
     private String isbn;
     private String title;
     private int numberOfCopy;
     private List<Author> authors;
+    private List<BookCopy> bookCopies;
 
     public Book(String isbn, String title, int numberOfCopy, List<Author> authors) {
         this.isbn = isbn;
@@ -53,6 +55,14 @@ public class Book implements Serializable {
 
     public void setAuthors(List<Author> authors) {
         this.authors = authors;
+    }
+
+    public List<BookCopy> getBookCopies() {
+        return bookCopies;
+    }
+
+    public void setBookCopies(List<BookCopy> bookCopies) {
+        this.bookCopies = bookCopies;
     }
 
     public void addCopy() {

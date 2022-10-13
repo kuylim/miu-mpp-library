@@ -1,5 +1,6 @@
 package edu.miu.elibrary.business;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -8,8 +9,8 @@ import java.io.Serializable;
  */
 public class Address implements Serializable {
 
-    private final long serialVersionUID = 7528298981912854554L;
-
+    @Serial
+    private static final long serialVersionUID = -3956258111143899194L;
     private String street;
     private String city;
     private String state;
