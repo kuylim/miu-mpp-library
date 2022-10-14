@@ -43,12 +43,19 @@ public class CheckoutController {
         return true;
     }
 
-    public CheckoutRecord findCheckoutRecord(int memberId) {
+    public Object[][] findCheckoutRecord(int memberId) {
+        Object[][] tableData = null;
         LibraryMember libraryMember = dataAccess.findLibraryMemberById(memberId);
         if (Objects.isNull(libraryMember)) {
             throw new BookCheckoutException("Library member not found");
         }
 
-        return dataAccess.findCheckoutRecord(memberId);
+        CheckoutRecord checkoutRecord = dataAccess.findCheckoutRecord(memberId);
+        List<CheckoutRecordEntry> entries = checkoutRecord.getCheckoutRecordEntries();
+
+        tableData = entries.stream()
+                .map(p -> new Object[] {p.getBookCopy().getCopyNumber(), p.getCheckoutDate(), p.getDueDate(), p.getOverdue()})
+                .toArray(Object[][]::new);
+        return tableData;
     }
 }

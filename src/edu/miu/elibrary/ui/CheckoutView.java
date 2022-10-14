@@ -16,6 +16,7 @@ import javax.swing.*;
 public class CheckoutView extends javax.swing.JPanel {
 
     private final CheckoutController checkoutController;
+    private Object[][] tableData = null;
 
     /**
      * Creates new form CheckoutView
@@ -40,23 +41,23 @@ public class CheckoutView extends javax.swing.JPanel {
         txtMemberId = new javax.swing.JTextField();
         btnCheckout = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        textInfo = new javax.swing.JTextArea();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         txtMemberIdSearch = new javax.swing.JTextField();
         btnSearch = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblCheckoutRec = new javax.swing.JTable();
 
         jLabel1.setText("ISBN");
 
         jLabel2.setText("Member ID");
 
         btnCheckout.setText("Checkout");
-        btnCheckout.addActionListener(this::btnCheckoutActionPerformed);
-
-        textInfo.setColumns(20);
-        textInfo.setRows(5);
-        jScrollPane1.setViewportView(textInfo);
+        btnCheckout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCheckoutActionPerformed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel3.setText("Find checkout records");
@@ -69,6 +70,22 @@ public class CheckoutView extends javax.swing.JPanel {
                 btnSearchActionPerformed(evt);
             }
         });
+
+        tblCheckoutRec.setModel(new javax.swing.table.DefaultTableModel(
+                tableData,
+                new String[]{
+                        "Book Copy Number", "Checkout Date", "Due Date", "Is Overdue"
+                }
+        ) {
+            boolean[] canEdit = new boolean[]{
+                    false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit[columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(tblCheckoutRec);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -104,7 +121,7 @@ public class CheckoutView extends javax.swing.JPanel {
                                                 .addGap(0, 98, Short.MAX_VALUE))
                                         .addGroup(layout.createSequentialGroup()
                                                 .addContainerGap()
-                                                .addComponent(jScrollPane1)))
+                                                .addComponent(jScrollPane2)))
                                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -127,9 +144,9 @@ public class CheckoutView extends javax.swing.JPanel {
                                         .addComponent(jLabel4)
                                         .addComponent(txtMemberIdSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(btnSearch))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)
-                                .addContainerGap())
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(12, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -146,8 +163,21 @@ public class CheckoutView extends javax.swing.JPanel {
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         try {
-            CheckoutRecord checkoutRecord = checkoutController.findCheckoutRecord(Integer.parseInt(txtMemberIdSearch.getText()));
-            textInfo.setText(checkoutRecord.getCheckoutRecordEntries().toString());
+            tableData = checkoutController.findCheckoutRecord(Integer.parseInt(txtMemberIdSearch.getText()));
+            tblCheckoutRec.setModel(new javax.swing.table.DefaultTableModel(
+                    tableData,
+                    new String[]{
+                            "Book Copy Number", "Checkout Date", "Due Date", "Is Overdue"
+                    }
+            ) {
+                boolean[] canEdit = new boolean[]{
+                        false, false, false, false
+                };
+
+                public boolean isCellEditable(int rowIndex, int columnIndex) {
+                    return canEdit[columnIndex];
+                }
+            });
         } catch (BookCheckoutException ex) {
             JOptionPane.showMessageDialog(CheckoutView.this, ex.getMessage());
         }
@@ -161,9 +191,9 @@ public class CheckoutView extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextArea textInfo;
+    private javax.swing.JTable tblCheckoutRec;
     private javax.swing.JTextField txtIsbn;
     private javax.swing.JTextField txtMemberId;
     private javax.swing.JTextField txtMemberIdSearch;
