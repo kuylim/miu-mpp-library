@@ -14,13 +14,29 @@ public class BookCopy implements Serializable {
     @Serial
     private static final long serialVersionUID = 8743140560302253102L;
 
+    private int id;
     private String copyNumber;
     private String status;
 
-    public BookCopy(){}
+    public BookCopy() {
+    }
+
+    public BookCopy(int id, String copyNumber, String status) {
+        this.id = id;
+        this.copyNumber = copyNumber;
+        this.status = status;
+    }
 
     public BookCopy(String copyNumber) {
         this.copyNumber = copyNumber;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getCopyNumber() {

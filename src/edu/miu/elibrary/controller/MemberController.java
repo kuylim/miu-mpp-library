@@ -7,13 +7,19 @@ import java.sql.SQLException;
 
 public class MemberController {
 
-    MemberRepository member;
-    public MemberController(){
-        member = new MemberRepository();
+    MemberRepository memberRepository;
+
+    public MemberController() {
+        memberRepository = new MemberRepository();
     }
 
     public LibraryMember add(LibraryMember mem) throws SQLException {
-        return member.add(mem);
+        return memberRepository.add(mem);
     }
 
+    public LibraryMember add(String firstname, String lastname, String phoneNumber, int addressId) {
+        LibraryMember libraryMember = new LibraryMember(firstname, lastname, phoneNumber);
+        libraryMember.setAddressId(addressId);
+        return memberRepository.add(libraryMember);
+    }
 }

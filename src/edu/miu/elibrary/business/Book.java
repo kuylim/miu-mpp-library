@@ -23,6 +23,14 @@ public class Book implements Serializable {
     private List<Author> authors;
     private List<BookCopy> bookCopies;
 
+    public Book(int id, String isbn, String title, int numberOfCopy, int maxCheckoutLength) {
+        this.id = id;
+        this.isbn = isbn;
+        this.title = title;
+        this.numberOfCopy = numberOfCopy;
+        this.maxCheckoutLength = maxCheckoutLength;
+    }
+
     public Book(String isbn, String title, int numberOfCopy, List<Author> authors) {
         this.isbn = isbn;
         this.title = title;

@@ -10,33 +10,30 @@ import java.io.Serializable;
 public class LibraryMember extends Person implements Serializable {
     @Serial
     private static final long serialVersionUID = -6565704637202603868L;
-    private String memberId;
     private int addressId;
+
+    private int memberId;
     private CheckoutRecord checkoutRecord;
 
-    public LibraryMember(String memberId, String firstName, String lastName, String phoneNumber) {
+    public LibraryMember(int memberId, String firstName, String lastName, String phoneNumber) {
         super(firstName, lastName, phoneNumber);
         this.memberId = memberId;
     }
 
-    public LibraryMember(String memberId, String firstName, String lastName, String phoneNumber, Address address) {
+    public LibraryMember(String firstName, String lastName, String phoneNumber) {
+        super(firstName, lastName, phoneNumber);
+    }
+
+    public LibraryMember(int memberId, String firstName, String lastName, String phoneNumber, Address address) {
         super(firstName, lastName, phoneNumber, address);
         this.memberId = memberId;
     }
 
-    public String getMemberId() {
+    public int getMemberId() {
         return memberId;
     }
 
-    public long getAddressId(){
-        return addressId;
-    }
-
-    public void setAddressId(int addressId){
-        this.addressId = addressId;
-    }
-
-    public void setMemberId(String memberId) {
+    public void setMemberId(int memberId) {
         this.memberId = memberId;
     }
 
@@ -46,6 +43,14 @@ public class LibraryMember extends Person implements Serializable {
 
     public void setCheckoutRecord(CheckoutRecord checkoutRecord) {
         this.checkoutRecord = checkoutRecord;
+    }
+
+    public int getAddressId() {
+        return addressId;
+    }
+
+    public void setAddressId(int addressId) {
+        this.addressId = addressId;
     }
 
     @Override
