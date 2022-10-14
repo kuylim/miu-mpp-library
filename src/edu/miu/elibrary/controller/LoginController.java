@@ -12,11 +12,11 @@ import java.util.Objects;
  * Author: Kuylim TITH
  * Date: 10/12/2022
  */
-public class SystemController {
+public class LoginController {
 
     private final DataAccessFacade dataAccess;
 
-    public SystemController() {
+    public LoginController() {
         dataAccess = new DataAccessFacade();
     }
 
