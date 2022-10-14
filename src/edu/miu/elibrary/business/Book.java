@@ -2,7 +2,9 @@ package edu.miu.elibrary.business;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Author: Kuylim TITH
@@ -75,6 +77,16 @@ public class Book implements Serializable {
 
     public void setBookCopies(List<BookCopy> bookCopies) {
         this.bookCopies = bookCopies;
+    }
+
+    public void setBookCopies(int numberOfCopy) {
+        bookCopies = new ArrayList<>();
+        for(int i = 1; i <= numberOfCopy; i++) {
+            BookCopy bookCopy = new BookCopy();
+            bookCopy.setCopyNumber(UUID.randomUUID().toString());
+            bookCopy.setStatus("A");
+            bookCopies.add(bookCopy);
+        }
     }
 
     public int getMaxCheckoutLength() {

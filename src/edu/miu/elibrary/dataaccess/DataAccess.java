@@ -12,7 +12,6 @@ public interface DataAccess {
 
     User findUserByUsername(String username);
 
-
     Book saveNewBook(Book book) throws SQLException;
 
     Book searchBookBy(String isbn) throws SQLException;

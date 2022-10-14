@@ -49,13 +49,16 @@ public class DataAccessFacade implements DataAccess {
 
     @Override
     public Book saveNewBook(Book book) throws SQLException {
-            String insert_book_statement = "INSERT INTO tb_book " + "(isbn, title, number_of_copy, max_checkout_length) "
+            String insert_book_statement = "INSERT INTO tb_book "
+                    + "(isbn, title, number_of_copy, max_checkout_length) "
                     + "VALUES(?, ?, ?, ?)";
 
-            String insert_author_book = "INSERT INTO tb_author_book " + "(author_id, book_id) "
+            String insert_author_book = "INSERT INTO tb_author_book "
+                    + "(author_id, book_id) "
                     + "VALUES(?, ?)";
 
-        String insert_book_copy = "INSERT INTO tb_book_copy " + "(book_id, copy_number,status) "
+        String insert_book_copy = "INSERT INTO tb_book_copy "
+                + "(book_id, copy_number,status) "
                 + "VALUES(?, ?, ?)";
 
             preparedStatement = connection.prepareStatement(insert_book_statement, java.sql.Statement.RETURN_GENERATED_KEYS);
@@ -64,7 +67,7 @@ public class DataAccessFacade implements DataAccess {
             preparedStatement.setInt(3, book.getNumberOfCopy());
             preparedStatement.setInt(4, book.getMaxCheckoutLength());
 
-            int row = preparedStatement.executeUpdate();
+            preparedStatement.executeUpdate();
 
             try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
@@ -94,7 +97,7 @@ public class DataAccessFacade implements DataAccess {
     @Override
     public List<Author> getAuthors() {
         String sql = "SELECT * FROM tb_author";
-        String sql_address = "SELECT * FROM tb_address where id = ?";
+        String sql_address = "SELECT * FROM tb_address WHERE id = ?";
 
         List<Author> authors = new ArrayList<>();
         try {
@@ -136,7 +139,8 @@ public class DataAccessFacade implements DataAccess {
 
         String update_book = "UPDATE tb_book SET number_of_copy = ? WHERE id = ?";
 
-        String insert_book_copy = "INSERT INTO tb_book_copy " + "(book_id, copy_number,status) "
+        String insert_book_copy = "INSERT INTO tb_book_copy "
+                + "(book_id, copy_number,status) "
                 + "VALUES(?, ?, ?)";
 
         preparedStatement = connection.prepareStatement(update_book);
@@ -161,7 +165,7 @@ public class DataAccessFacade implements DataAccess {
         preparedStatement.setString(1, isbn);
 
         ResultSet resultSet = preparedStatement.executeQuery();
-        while (resultSet.next()) {
+        if (resultSet.next()) {
             System.out.println();
             int id = resultSet.getInt(1);
             String isbnString = resultSet.getString(2);
