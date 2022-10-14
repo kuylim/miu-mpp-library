@@ -1,6 +1,5 @@
 package edu.miu.elibrary.dataaccess;
 
-import com.mysql.cj.jdbc.CallableStatement;
 import edu.miu.elibrary.business.Address;
 
 import java.sql.*;
@@ -8,11 +7,12 @@ import java.sql.*;
 public class AddressRepository {
     private final Connection conn;
     private PreparedStatement preparedStatement;
+
     public AddressRepository() {
         this.conn = DbConnection.getConnection();
     }
 
-    public Address add(Address address) throws SQLException {
+    public Address add(Address address) {
         try {
             String query = "INSERT INTO  `tb_address`\n" +
                     "(\n" +
@@ -27,25 +27,21 @@ public class AddressRepository {
                     "?,\n" +
                     "?);\n";
 
-            PreparedStatement ps = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, address.getStreet());
-            ps.setString(2, address.getCity());
-            ps.setString(3, address.getState());
-            ps.setString(4, address.getZip());
-            ps.executeUpdate();
+            preparedStatement = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setString(1, address.getStreet());
+            preparedStatement.setString(2, address.getCity());
+            preparedStatement.setString(3, address.getState());
+            preparedStatement.setString(4, address.getZip());
+            preparedStatement.executeUpdate();
 
-            ResultSet re = ps.getGeneratedKeys();
-            if(re.next()){
-                address.setId((long)re.getInt(1));
+            ResultSet re = preparedStatement.getGeneratedKeys();
+            if (re.next()) {
+                address.setId(re.getInt(1));
             }
+            return address;
+        } catch (SQLException s) {
+            s.printStackTrace();
         }
-        catch (SQLException s){
-            throw s;
-        }
-
-        return address;
-
+        return null;
     }
-
-
 }
