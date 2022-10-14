@@ -59,7 +59,7 @@ public class BookCopy implements Serializable {
         List<BookCopy> newBookCopies = new ArrayList<>();
         for(int i = 1; i <= numberOfCopy; i++) {
             BookCopy bookCopy = new BookCopy();
-            bookCopy.setCopyNumber(String.valueOf(System.currentTimeMillis()));
+            bookCopy.setCopyNumber(String.valueOf(System.currentTimeMillis() + i));
             bookCopy.setStatus("A");
             newBookCopies.add(bookCopy);
         }

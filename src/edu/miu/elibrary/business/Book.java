@@ -91,7 +91,7 @@ public class Book implements Serializable {
         bookCopies = new ArrayList<>();
         for(int i = 1; i <= numberOfCopy; i++) {
             BookCopy bookCopy = new BookCopy();
-            bookCopy.setCopyNumber(String.valueOf(System.currentTimeMillis()));
+            bookCopy.setCopyNumber(String.valueOf(System.currentTimeMillis() + i));
             bookCopy.setStatus("A");
             bookCopies.add(bookCopy);
         }
