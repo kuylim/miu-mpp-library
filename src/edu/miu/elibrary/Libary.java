@@ -19,8 +19,8 @@ public class Libary {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        MainView mainView = new MainView();
         if (!Objects.isNull(SecurityContext.principal)) {
+            MainView mainView = new MainView();
             mainView.setVisible(true);
         } else {
             LoginView loginView = new LoginView();
