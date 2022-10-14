@@ -6,6 +6,9 @@ package edu.miu.elibrary.ui;
 
 import edu.miu.elibrary.controller.OverdueController;
 
+import javax.swing.*;
+import java.util.Objects;
+
 /**
  *
  * @author Kuylim Tith
@@ -97,6 +100,9 @@ public class OverdueView extends javax.swing.JPanel {
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         tableData = overdueController.findOverdueBooksCheckout(txtIsbn.getText());
+        if(Objects.equals(tableData, new Object[][]{{}})) {
+            JOptionPane.showMessageDialog(this, "No overdue for this book.");
+        }
         tbBookOverdue.setModel(new javax.swing.table.DefaultTableModel(
                 tableData,
                 new String [] {
