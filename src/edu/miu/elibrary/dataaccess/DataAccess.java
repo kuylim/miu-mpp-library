@@ -4,9 +4,11 @@ import edu.miu.elibrary.auth.User;
 import edu.miu.elibrary.business.*;
 
 import java.time.LocalDate;
+
 import edu.miu.elibrary.business.Author;
 import edu.miu.elibrary.business.Book;
 import edu.miu.elibrary.business.BookCopy;
+import edu.miu.elibrary.business.dto.BookOverdue;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -38,5 +40,7 @@ public interface DataAccess {
     List<Author> getAuthors();
 
     boolean addAuthor(Author author) throws SQLException;
+
+    List<BookOverdue> findOverdueBooksCheckout(String isbn);
 
 }

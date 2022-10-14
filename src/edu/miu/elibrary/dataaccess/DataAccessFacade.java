@@ -7,6 +7,7 @@ import edu.miu.elibrary.business.Address;
 import edu.miu.elibrary.business.Author;
 import edu.miu.elibrary.business.Book;
 import edu.miu.elibrary.business.BookCopy;
+import edu.miu.elibrary.business.dto.BookOverdue;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,6 +18,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.*;
+import java.util.Objects;
 
 /**
  * Author: Kuylim TITH
@@ -159,7 +161,7 @@ public class DataAccessFacade implements DataAccess {
     }
 
     @Override
-    public CheckoutRecord saveCheckoutRecord(int memberId, int checkoutEntryId) {
+    public void saveCheckoutRecord(int memberId, int checkoutEntryId) {
         String sqlCommand = "INSERT INTO tb_checkout (checkout_entry_id, library_member_id) values (?, ?)";
         try {
             preparedStatement = connection.prepareStatement(sqlCommand, Statement.RETURN_GENERATED_KEYS);
@@ -168,11 +170,10 @@ public class DataAccessFacade implements DataAccess {
             preparedStatement.executeUpdate();
             ResultSet tableKeys = preparedStatement.getGeneratedKeys();
             tableKeys.next();
-            return new CheckoutRecord();
+            new CheckoutRecord();
         } catch (Exception exception) {
             exception.printStackTrace();
         }
-        return null;
     }
 
     @Override
@@ -271,6 +272,48 @@ public class DataAccessFacade implements DataAccess {
             return authors;
         } catch (Exception e) {
             e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public List<BookOverdue> findOverdueBooksCheckout(String isbn) {
+        List<BookOverdue> bookOverdues = new ArrayList<>();
+        String sqlCommand = "SELECT b.isbn, b.title, bc.copy_number, mem.firstname, mem.lastname, te.due_date " +
+                "FROM tb_book b " +
+                "INNER JOIN tb_book_copy bc ON b.id = bc.book_id " +
+                "INNER JOIN tb_checkout_entry te ON te.book_copy_id = bc.id " +
+                "INNER JOIN tb_checkout ch ON ch.checkout_entry_id = te.id " +
+                "INNER JOIN tb_library_member mem ON mem.id = ch.library_member_id " +
+                "WHERE b.isbn = ? AND bc.status = 'B'";
+        try {
+            preparedStatement = connection.prepareStatement(sqlCommand);
+            preparedStatement.setString(1, isbn);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                BookOverdue bookOverdue = bindResultsetToBookOverdue(resultSet);
+                if (!Objects.isNull(bookOverdue)) {
+                    bookOverdues.add(bindResultsetToBookOverdue(resultSet));
+                }
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return bookOverdues;
+    }
+
+    private BookOverdue bindResultsetToBookOverdue(ResultSet resultSet) {
+        try {
+            LocalDate dueDate = LocalDate.parse(resultSet.getString("due_date"), formatter);
+            if (LocalDate.now().isAfter(dueDate)) {
+                return null;
+            }
+            return new BookOverdue(resultSet.getString("isbn"),
+                    resultSet.getString("title"), resultSet.getString("copy_number"),
+                    (resultSet.getString("firstname") + " " + resultSet.getString("lastname")),
+                    dueDate, "Yes");
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
         return null;
     }

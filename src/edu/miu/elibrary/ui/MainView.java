@@ -17,6 +17,7 @@ public class MainView extends javax.swing.JFrame {
         mainTab.addTab("Library Member", new MemberView());
         mainTab.addTab("Book", new BookView());
         mainTab.addTab("Checkout", new CheckoutView());
+        mainTab.addTab("Overdue", new OverdueView());
         setLocationRelativeTo(null);
     }
 
