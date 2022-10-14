@@ -26,6 +26,10 @@ public class LoginController {
 
     public boolean login(String username, String password) {
         User user = dataAccess.findUserByUsername(username);
+        return verifyPassword(password, user);
+    }
+
+    public boolean verifyPassword(String password, User user) {
         if (Objects.isNull(user)) {
             throw new RuntimeException("Invalid user account");
         }
