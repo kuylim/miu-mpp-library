@@ -12,7 +12,7 @@ import java.sql.Statement;
 
 public class MemberDataAccessFacade extends DataAccessFacade implements MemberDataAccess{
     @Override
-    public Address add(Address address) {
+    public Address saveAddress(Address address) {
         try {
             String query = "INSERT INTO tb_address (street, city, state, zip) VALUES (?,?,?,?)";
             preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
@@ -34,7 +34,7 @@ public class MemberDataAccessFacade extends DataAccessFacade implements MemberDa
     }
 
     @Override
-    public LibraryMember add(LibraryMember member) {
+    public LibraryMember saveLibraryMember(LibraryMember member) {
         try {
             String query = "INSERT INTO tb_library_member (firstname, lastname, phonenumber, address_id) VALUES(?,?,?,?)";
             preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);

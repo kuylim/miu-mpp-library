@@ -1,5 +1,6 @@
 package edu.miu.elibrary.controller;
 
+import edu.miu.elibrary.business.CheckoutRecordEntry;
 import edu.miu.elibrary.business.dto.BookOverdue;
 import edu.miu.elibrary.dataaccess.CheckoutDataAccess;
 import edu.miu.elibrary.dataaccess.CheckoutDataAccessFacade;
@@ -25,8 +26,14 @@ public class OverdueController {
         if (Objects.isNull(bookOverdues) || bookOverdues.isEmpty()) {
             return tableData;
         }
+        tableData = convertCheckoutRecordTo2DArray(bookOverdues);
+        return tableData;
+    }
+
+    private Object[][] convertCheckoutRecordTo2DArray(List<BookOverdue> bookOverdues) {
+        Object[][] tableData = null;
         tableData = bookOverdues.stream()
-                .map(p -> new Object[] {p.getIsbn(), p.getTitle(), p.getCopyNumber(),
+                .map(p -> new Object[]{p.getIsbn(), p.getTitle(), p.getCopyNumber(),
                         p.getBorrowBy(), p.getDueDate(), p.getIsOverdue()})
                 .toArray(Object[][]::new);
         return tableData;

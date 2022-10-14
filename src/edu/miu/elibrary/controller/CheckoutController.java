@@ -55,7 +55,13 @@ public class CheckoutController {
         CheckoutRecord checkoutRecord = dataAccess.findCheckoutRecord(memberId);
         List<CheckoutRecordEntry> entries = checkoutRecord.getCheckoutRecordEntries();
 
-        tableData = entries.stream()
+        tableData = convertCheckoutRecordTo2DArray(entries);
+        return tableData;
+    }
+
+    private Object[][] convertCheckoutRecordTo2DArray(List<CheckoutRecordEntry> recordEntries) {
+        Object[][] tableData = null;
+        tableData = recordEntries.stream()
                 .map(p -> new Object[] {p.getBookCopy().getCopyNumber(), p.getCheckoutDate(), p.getDueDate(), p.getOverdue()})
                 .toArray(Object[][]::new);
         return tableData;

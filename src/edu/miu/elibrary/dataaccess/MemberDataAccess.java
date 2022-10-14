@@ -5,9 +5,9 @@ import edu.miu.elibrary.business.Address;
 import edu.miu.elibrary.business.LibraryMember;
 
 public interface MemberDataAccess {
-    Address add(Address address);
+    Address saveAddress(Address address);
 
-    LibraryMember add(LibraryMember member);
+    LibraryMember saveLibraryMember(LibraryMember member);
 
     User findUserByUsername(String username);
 }

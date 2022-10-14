@@ -172,8 +172,8 @@ public class MemberView extends javax.swing.JPanel {
     }
 
     public void saveLibraryMember() {
-        Address address = memberController.add(txtStreet.getText(), txtCity.getText(), txtState.getText(), txtZip.getText());
-        LibraryMember member = memberController.add(txtFirstName.getText(), txtLastname.getText(), txtPhoneNumber.getText(), address.getId());
+        LibraryMember member = memberController.addMember(txtFirstName.getText(), txtLastname.getText(),
+                txtPhoneNumber.getText(),txtStreet.getText(), txtCity.getText(), txtState.getText(), txtZip.getText());
         if (!Objects.isNull(member)) {
             clearLibraryMemberForm();
             JOptionPane.showMessageDialog(MemberView.this, "Library member save successfully");

@@ -23,9 +23,9 @@ public class DbConnection implements Serializable {
            String conString = "jdbc:mysql://localhost:3306/library";
            try {
                //Class.forName("com.mysql.jdbc.Driver");
-//               connection = DriverManager.getConnection(conString, "kuylim", "b9aFm@WX");
+               connection = DriverManager.getConnection(conString, "kuylim", "b9aFm@WX");
 //               connection = DriverManager.getConnection(conString, "root", "Seav@0305");
-               connection = DriverManager.getConnection(conString, "root", "Proseth@2612");
+               //connection = DriverManager.getConnection(conString, "root", "Proseth@2612");
            }
 //           catch (ClassNotFoundException ex) {
 //               Logger.getLogger(DbConnection.class.getName()).log(Level.SEVERE, null, ex);

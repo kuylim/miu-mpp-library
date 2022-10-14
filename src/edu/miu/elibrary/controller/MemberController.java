@@ -5,7 +5,7 @@ import edu.miu.elibrary.business.LibraryMember;
 import edu.miu.elibrary.dataaccess.MemberDataAccess;
 import edu.miu.elibrary.dataaccess.MemberDataAccessFacade;
 
-import java.sql.SQLException;
+import java.util.Objects;
 
 public class MemberController {
 
@@ -15,22 +15,15 @@ public class MemberController {
         dataAccess = new MemberDataAccessFacade();
     }
 
-    public LibraryMember add(LibraryMember mem) throws SQLException {
-        return dataAccess.add(mem);
-    }
-
-    public LibraryMember add(String firstname, String lastname, String phoneNumber, int addressId) {
-        LibraryMember libraryMember = new LibraryMember(firstname, lastname, phoneNumber);
-        libraryMember.setAddressId(addressId);
-        return dataAccess.add(libraryMember);
-    }
-
-    public Address add(Address a) throws SQLException {
-        return dataAccess.add(a);
-    }
-
-    public Address add(String street, String city, String state, String zip) {
+    public LibraryMember addMember(String firstname, String lastname, String phoneNumber,
+                                   String street, String city, String state, String zip) {
         Address address = new Address(street, city, state, zip);
-        return dataAccess.add(address);
+        address = dataAccess.saveAddress(address);
+        if(!Objects.isNull(address)) {
+            LibraryMember libraryMember = new LibraryMember(firstname, lastname, phoneNumber);
+            libraryMember.setAddressId(address.getId());
+            return dataAccess.saveLibraryMember(libraryMember);
+        }
+        return null;
     }
 }
