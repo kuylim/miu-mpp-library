@@ -22,11 +22,14 @@ public class DbConnection implements Serializable {
        if(Objects.isNull(connection)) {
            String conString = "jdbc:mysql://localhost:3306/library";
            try {
-               Class.forName("com.mysql.cj.jdbc.Driver");
-               connection = DriverManager.getConnection(conString, "root", "Proseth@2612");
-           } catch (ClassNotFoundException ex) {
-               Logger.getLogger(DbConnection.class.getName()).log(Level.SEVERE, null, ex);
-           } catch (SQLException ex) {
+               //Class.forName("com.mysql.jdbc.Driver");
+               //connection = DriverManager.getConnection(conString, "root", "b9aFm@WX");
+               connection = DriverManager.getConnection(conString, "root", "Seav@0305");
+           }
+//           catch (ClassNotFoundException ex) {
+//               Logger.getLogger(DbConnection.class.getName()).log(Level.SEVERE, null, ex);
+//           }
+           catch (SQLException ex) {
                Logger.getLogger(DbConnection.class.getName()).log(Level.SEVERE, null, ex);
            }
        }

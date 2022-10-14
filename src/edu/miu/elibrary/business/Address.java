@@ -11,6 +11,8 @@ public class Address implements Serializable {
 
     @Serial
     private static final long serialVersionUID = -3956258111143899194L;
+
+    private long id;
     private String street;
     private String city;
     private String state;
@@ -23,6 +25,9 @@ public class Address implements Serializable {
         this.zip = zip;
     }
 
+    public long getId(){
+        return id;
+    }
     public String getStreet() {
         return street;
     }
@@ -47,6 +52,10 @@ public class Address implements Serializable {
         this.state = state;
     }
 
+    public void setId(long id)
+    {
+        this.id = id;
+    }
     public String getZip() {
         return zip;
     }
