@@ -4,6 +4,18 @@
  */
 package edu.miu.elibrary.ui;
 
+
+
+import edu.miu.elibrary.controller.AuthorController;
+import edu.miu.elibrary.dataaccess.DataAccessFacade;
+import edu.miu.elibrary.ruleset.BookViewValidateType;
+import edu.miu.elibrary.ruleset.RuleException;
+import edu.miu.elibrary.ruleset.RuleSet;
+import edu.miu.elibrary.ruleset.RuleSetFactory;
+
+import javax.swing.*;
+import java.sql.SQLException;
+
 /**
  *
  * @author Kuylim Tith
@@ -13,7 +25,20 @@ public class AuthorView extends javax.swing.JPanel {
     /**
      * Creates new form AuthorView
      */
-    public AuthorView() {
+
+
+    private final AuthorController auhorController;
+
+    private ReloadInterface reloadInterface;
+
+    {
+        DataAccessFacade dataAccessFacade = new DataAccessFacade();
+        auhorController = new AuthorController(dataAccessFacade);
+    }
+
+
+    public AuthorView(ReloadInterface reloadInterface) {
+        this.reloadInterface = reloadInterface;
         initComponents();
     }
 
@@ -193,13 +218,112 @@ public class AuthorView extends javax.swing.JPanel {
     }//GEN-LAST:event_txtZipActionPerformed
 
     private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
-       
+        resetForm();
     }//GEN-LAST:event_btnResetActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-      
+        addAuthor();
     }//GEN-LAST:event_btnSaveActionPerformed
 
+    void addAuthor() {
+        RuleSet bookRuleSet = RuleSetFactory.getRuleSet(AuthorView.this);
+        try {
+            bookRuleSet.applyRules(AuthorView.this);
+            //if rules pass...
+            //submit data
+            try {
+                boolean isSuccess = auhorController.addAuthor(
+                        auhorController.getAuthor(
+                                getTxtFirstName(),
+                                getTxtLastname(),
+                                getTxtPhoneNumber(),
+                                getTxtStreet(),
+                                getTxtCity(),
+                                getTxtState(),
+                                getTxtZip())
+                );
+                if (isSuccess) JOptionPane.showMessageDialog(this,getTxtFirstName() + " " + getTxtLastname() + "added successfully");
+                reloadInterface.reload();
+                resetForm();
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(AuthorView.this,
+                        "Error: "+e.getMessage(),
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+        } catch(RuleException e) {
+            JOptionPane.showMessageDialog(AuthorView.this,
+                    "Error: "+e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+
+        }
+    }
+
+    private void resetForm() {
+        setTxtFirstName("");
+        setTxtLastname("");
+        setTxtPhoneNumber("");
+        setTxtStreet("");
+        setTxtCity("");
+        setTxtState("");
+        setTxtZip("");
+    }
+    public String getTxtFirstName() {
+        return txtFirstName.getText();
+    }
+
+    public void setTxtFirstName(String txtFirstName) {
+        this.txtFirstName.setText(txtFirstName);
+    }
+
+    public String getTxtLastname() {
+        return txtLastname.getText();
+    }
+
+    public void setTxtLastname(String txtLastname) {
+        this.txtLastname.setText(txtLastname);
+    }
+
+    public String getTxtPhoneNumber() {
+        return txtPhoneNumber.getText();
+    }
+
+    public void setTxtPhoneNumber(String txtPhoneNumber) {
+        this.txtPhoneNumber.setText(txtPhoneNumber);
+    }
+
+    public String getTxtStreet() {
+        return txtStreet.getText();
+    }
+
+    public void setTxtStreet(String text) {
+        this.txtStreet.setText(text);
+    }
+
+    public String getTxtCity() {
+        return txtCity.getText();
+    }
+
+    public void setTxtCity(String txtCity) {
+        this.txtCity.setText(txtCity);
+    }
+
+    public String getTxtState() {
+        return txtState.getText();
+    }
+
+    public void setTxtState(String txtState) {
+        this.txtState.setText(txtState);
+    }
+
+    public String getTxtZip() {
+        return txtZip.getText();
+    }
+
+    public void setTxtZip(String txtZip) {
+        this.txtZip.setText(txtZip);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnReset;

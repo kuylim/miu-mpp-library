@@ -31,12 +31,12 @@ public class Book implements Serializable {
         this.maxCheckoutLength = maxCheckoutLength;
     }
 
-    public Book(String isbn, String title, int numberOfCopy, List<Author> authors) {
+    public Book(String isbn, String title, int numberOfCopy, List<Author> authors, int maxCheckoutLength) {
         this.isbn = isbn;
         this.title = title;
         this.numberOfCopy = numberOfCopy;
         this.authors = authors;
-        this.maxCheckoutLength = 21;
+        this.maxCheckoutLength = maxCheckoutLength;
     }
 
     public int getId() {

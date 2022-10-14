@@ -33,8 +33,8 @@ public class BookController {
     }
 
 
-    public String createNewBook(String isbn, String title, int numberOfCopy, List<Author> author) throws SQLException {
-        Book book = new Book(isbn, title, numberOfCopy, author);
+    public String createNewBook(String isbn, String title, int numberOfCopy, List<Author> author, int maxCheckoutLength) throws SQLException {
+        Book book = new Book(isbn, title, numberOfCopy, author, maxCheckoutLength);
         book.setBookCopies(numberOfCopy);
         Book result = saveNewBook(book);
         return result.getTitle();

@@ -51,6 +51,7 @@ public class MainView extends javax.swing.JFrame {
         );
 
         pack();
+        setResizable(false);
     }// </editor-fold>//GEN-END:initComponents
 
     /**

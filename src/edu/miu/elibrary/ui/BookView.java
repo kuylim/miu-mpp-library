@@ -13,6 +13,7 @@ import edu.miu.elibrary.ruleset.RuleSet;
 import edu.miu.elibrary.ruleset.RuleSetFactory;
 
 import javax.swing.*;
+import java.awt.*;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -20,7 +21,7 @@ import java.util.List;
  *
  * @author Kuylim Tith
  */
-public class BookView extends javax.swing.JPanel {
+public class BookView extends javax.swing.JPanel  implements  ReloadInterface{
 
     private BookViewValidateType bookViewValidateType;
     private final BookController bookController;
@@ -36,7 +37,10 @@ public class BookView extends javax.swing.JPanel {
     public BookView() {
         initComponents();
         loadAuthorList();
+        txtNumberOfCopyExist.setEnabled(false);
     }
+
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -229,7 +233,16 @@ public class BookView extends javax.swing.JPanel {
         lstAuthors.setModel(bookController.getAuthorListModel());
     }
     private void btnAddAuthorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddAuthorActionPerformed
-        // TODO add your handling code here:
+        JFrame frame = new JFrame();
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setVisible(true);
+        frame.setResizable(false);
+        AuthorView authorView = new AuthorView(this);
+        frame.setLayout(new BorderLayout());
+        frame.getContentPane().add(authorView);
+        frame.add(authorView, BorderLayout.CENTER);
+        frame.pack();
+        frame.setLocationRelativeTo(null);
     }
 
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
@@ -244,9 +257,9 @@ public class BookView extends javax.swing.JPanel {
         searchBook();
     }
 
-    private void btnSaveCopyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveCopyActionPerformed
+    private void btnSaveCopyActionPerformed(java.awt.event.ActionEvent evt) {
         addBookCopy();
-    }//GEN-LAST:event_btnSaveCopyActionPerformed
+    }
 
     void addBook() {
         RuleSet bookRuleSet = RuleSetFactory.getRuleSet(BookView.this);
@@ -257,10 +270,11 @@ public class BookView extends javax.swing.JPanel {
             //submit data
             try {
                 String bookTitle = bookController.createNewBook(
-                        txtIsbn.getText(),
-                        txtTitle.getText(),
+                        getIsbnText(),
+                        getBookTitleText(),
                         Integer.parseInt(txtNumberOfCopy.getText()),
-                        lstAuthors.getSelectedValuesList()
+                        lstAuthors.getSelectedValuesList(),
+                        Integer.parseInt(getTxtMaxCheckoutLength())
                 );
                 JOptionPane.showMessageDialog(this,bookTitle + "added successfully");
                 clearAddBookForm();
@@ -373,6 +387,14 @@ public class BookView extends javax.swing.JPanel {
         return txtIsbnSearch.getText();
     }
 
+    public String getTxtMaxCheckoutLength() {
+        return txtMaxCheckoutLength.getText();
+    }
+
+    public void setTxtMaxCheckoutLength(String txtMaxCheckoutLength) {
+        this.txtMaxCheckoutLength.setText(txtMaxCheckoutLength);
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddAuthor;
     private javax.swing.JButton btnClear;
@@ -396,5 +418,11 @@ public class BookView extends javax.swing.JPanel {
     private javax.swing.JTextField txtNumberOfCopy;
     private javax.swing.JTextField txtNumberOfCopyExist;
     private javax.swing.JTextField txtTitle;
+
+    @Override
+    public void reload() {
+        System.out.println("reload");
+        loadAuthorList();
+    }
     // End of variables declaration//GEN-END:variables
 }

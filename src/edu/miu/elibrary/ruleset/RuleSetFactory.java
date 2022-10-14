@@ -1,5 +1,6 @@
 package edu.miu.elibrary.ruleset;
 
+import edu.miu.elibrary.ui.AuthorView;
 import edu.miu.elibrary.ui.BookView;
 import java.awt.*;
 import java.util.HashMap;
@@ -10,6 +11,7 @@ final public class RuleSetFactory {
 
 	static {
 		map.put(BookView.class, new BookRuleSet());
+		map.put(AuthorView.class, new AuthorRuleSet());
 	}
 	public static RuleSet getRuleSet(Component c) {
 		Class<? extends Component> cl = c.getClass();

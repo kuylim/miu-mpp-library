@@ -228,7 +228,7 @@ public class DataAccessFacade implements DataAccess {
                     }
                 }
                 else {
-                    throw new SQLException("Creating user failed, no ID obtained.");
+                    throw new SQLException("Creating book failed, no ID obtained.");
                 }
             }
 
@@ -312,10 +312,37 @@ public class DataAccessFacade implements DataAccess {
             String title = resultSet.getString(3);
             int number_of_copy = resultSet.getInt(4);
             int max_checkout_length = resultSet.getInt(5);
-            Book book = new Book(isbnString, title, number_of_copy, null);
+            Book book = new Book(isbnString, title, number_of_copy, null, max_checkout_length);
             book.setId(id);
             return book;
         }
         return null;
+    }
+
+    @Override
+    public boolean addAuthor(Author author) throws SQLException {
+        String add_address_sql = "INSERT INTO tb_address (street, city, state, zip) VALUES (?, ?, ?, ?)";
+        String add_author_sql = "INSERT INTO tb_author (firstname, lastname, phonenumber, address_id) VALUES(?, ?, ?, ?)";
+
+        preparedStatement = connection.prepareStatement(add_address_sql, java.sql.Statement.RETURN_GENERATED_KEYS);
+        preparedStatement.setString(1, author.getAddress().getStreet());
+        preparedStatement.setString(2, author.getAddress().getCity());
+        preparedStatement.setString(3, author.getAddress().getState());
+        preparedStatement.setString(4, author.getAddress().getZip());
+        preparedStatement.executeUpdate();
+        try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
+            if (generatedKeys.next()) {
+                preparedStatement = connection.prepareStatement(add_author_sql);
+                preparedStatement.setString(1, author.getFirstName());
+                preparedStatement.setString(2, author.getLastName());
+                preparedStatement.setString(3, author.getPhoneNumber());
+                preparedStatement.setInt(4, generatedKeys.getInt(1));
+                preparedStatement.executeUpdate();
+                return true;
+            }
+            else {
+                throw new SQLException("Creating address failed, no ID obtained.");
+            }
+        }
     }
 }

@@ -37,4 +37,6 @@ public interface DataAccess {
     boolean addBookCopy(Book book, List<BookCopy> bookCopies) throws SQLException;
     List<Author> getAuthors();
 
+    boolean addAuthor(Author author) throws SQLException;
+
 }
