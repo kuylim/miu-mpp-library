@@ -9,7 +9,8 @@ import edu.miu.elibrary.business.LibraryMember;
 import edu.miu.elibrary.controller.AddressController;
 import edu.miu.elibrary.controller.MemberController;
 
-import java.sql.SQLException;
+import javax.swing.*;
+import java.util.Objects;
 
 /**
  * @author Kuylim Tith
@@ -27,9 +28,6 @@ public class MemberView extends javax.swing.JPanel {
         initComponents();
         addressController = new AddressController();
         memberController = new MemberController();
-
-
-        //controller.loadAllLibraryMember();
     }
 
     /**
@@ -73,22 +71,10 @@ public class MemberView extends javax.swing.JPanel {
         jLabel7.setText("Zip");
 
         btnReset.setText("Reset");
-        btnReset.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnResetActionPerformed(evt);
-            }
-        });
+        btnReset.addActionListener(this::btnResetActionPerformed);
 
         btnSave.setText("Save");
-        btnSave.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                try {
-                    btnSaveActionPerformed(evt);
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        });
+        btnSave.addActionListener(this::btnSaveActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -175,7 +161,7 @@ public class MemberView extends javax.swing.JPanel {
         clearLibraryMemberForm();
     }//GEN-LAST:event_btnResetActionPerformed
 
-    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {//GEN-FIRST:event_btnSaveActionPerformed
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         saveLibraryMember();
     }//GEN-LAST:event_btnSaveActionPerformed
 
@@ -189,19 +175,16 @@ public class MemberView extends javax.swing.JPanel {
         txtZip.setText(EMPTY);
     }
 
-    public void saveLibraryMember() throws SQLException {
-        Address address = new Address(txtStreet.getText(), txtCity.getText(), txtState.getText(), txtZip.getText());
-        this.addressController.add(address);
-
-        LibraryMember member = new LibraryMember(txtFirstName.getText(), txtLastname.getText(), txtPhoneNumber.getText());
-        member.setAddressId((int) address.getId());
-        this.memberController.add(member);
-
-        if (member.getMemberId() > 0) {
+    public void saveLibraryMember() {
+        Address address = addressController.add(txtStreet.getText(), txtCity.getText(), txtState.getText(), txtZip.getText());
+        LibraryMember member = memberController.add(txtFirstName.getText(), txtLastname.getText(), txtPhoneNumber.getText(), address.getId());
+        if (!Objects.isNull(member)) {
             clearLibraryMemberForm();
+            JOptionPane.showMessageDialog(MemberView.this, "Library member save successfully");
+        } else {
+            JOptionPane.showMessageDialog(MemberView.this, "Failed to save library member");
         }
     }
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnReset;
