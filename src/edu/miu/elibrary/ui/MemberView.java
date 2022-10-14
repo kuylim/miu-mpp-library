@@ -6,7 +6,6 @@ package edu.miu.elibrary.ui;
 
 import edu.miu.elibrary.business.Address;
 import edu.miu.elibrary.business.LibraryMember;
-import edu.miu.elibrary.controller.AddressController;
 import edu.miu.elibrary.controller.MemberController;
 
 import javax.swing.*;
@@ -19,14 +18,11 @@ public class MemberView extends javax.swing.JPanel {
 
     private static final String EMPTY = "";
     private final MemberController memberController;
-    private final AddressController addressController;
-
     /**
      * Creates new form AddMemberView
      */
     public MemberView() {
         initComponents();
-        addressController = new AddressController();
         memberController = new MemberController();
     }
 
@@ -176,7 +172,7 @@ public class MemberView extends javax.swing.JPanel {
     }
 
     public void saveLibraryMember() {
-        Address address = addressController.add(txtStreet.getText(), txtCity.getText(), txtState.getText(), txtZip.getText());
+        Address address = memberController.add(txtStreet.getText(), txtCity.getText(), txtState.getText(), txtZip.getText());
         LibraryMember member = memberController.add(txtFirstName.getText(), txtLastname.getText(), txtPhoneNumber.getText(), address.getId());
         if (!Objects.isNull(member)) {
             clearLibraryMemberForm();

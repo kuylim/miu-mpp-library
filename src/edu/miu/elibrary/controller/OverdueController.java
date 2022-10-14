@@ -1,8 +1,8 @@
 package edu.miu.elibrary.controller;
 
 import edu.miu.elibrary.business.dto.BookOverdue;
-import edu.miu.elibrary.dataaccess.DataAccess;
-import edu.miu.elibrary.dataaccess.DataAccessFacade;
+import edu.miu.elibrary.dataaccess.CheckoutDataAccess;
+import edu.miu.elibrary.dataaccess.CheckoutDataAccessFacade;
 
 import java.util.List;
 import java.util.Objects;
@@ -13,10 +13,10 @@ import java.util.Objects;
  */
 public class OverdueController {
 
-    private final DataAccess dataAccess;
+    private final CheckoutDataAccess dataAccess;
 
     public OverdueController() {
-        dataAccess = new DataAccessFacade();
+        dataAccess = new CheckoutDataAccessFacade();
     }
 
     public Object[][] findOverdueBooksCheckout(String isbn) {

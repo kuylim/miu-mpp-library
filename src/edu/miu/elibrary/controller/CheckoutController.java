@@ -1,6 +1,8 @@
 package edu.miu.elibrary.controller;
 
 import edu.miu.elibrary.business.*;
+import edu.miu.elibrary.dataaccess.CheckoutDataAccess;
+import edu.miu.elibrary.dataaccess.CheckoutDataAccessFacade;
 import edu.miu.elibrary.dataaccess.DataAccessFacade;
 import edu.miu.elibrary.exception.BookCheckoutException;
 
@@ -13,10 +15,10 @@ import java.util.*;
  */
 public class CheckoutController {
 
-    private final DataAccessFacade dataAccess;
+    private final CheckoutDataAccess dataAccess;
 
     public CheckoutController() {
-        dataAccess = new DataAccessFacade();
+        dataAccess = new CheckoutDataAccessFacade();
     }
 
     public boolean checkoutBook(String isbn, int memberId) {

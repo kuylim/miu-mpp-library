@@ -6,6 +6,8 @@ package edu.miu.elibrary.ui;
 
 import edu.miu.elibrary.business.Author;
 import edu.miu.elibrary.controller.BookController;
+import edu.miu.elibrary.dataaccess.BookDataAccess;
+import edu.miu.elibrary.dataaccess.BookDataAccessFacade;
 import edu.miu.elibrary.dataaccess.DataAccessFacade;
 import edu.miu.elibrary.exception.BookViewValidateType;
 import edu.miu.elibrary.exception.RuleException;
@@ -29,11 +31,10 @@ public class BookView extends javax.swing.JPanel  implements  ReloadInterface{
     /**
      * Creates new form AddBookView
      */
-
     {
-        DataAccessFacade dataAccessFacade = new DataAccessFacade();
-        bookController = new BookController(dataAccessFacade);
+        bookController = new BookController();
     }
+
     public BookView() {
         initComponents();
         loadAuthorList();

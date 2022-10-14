@@ -7,7 +7,7 @@ package edu.miu.elibrary.ui;
 
 
 import edu.miu.elibrary.controller.AuthorController;
-import edu.miu.elibrary.dataaccess.DataAccessFacade;
+import edu.miu.elibrary.dataaccess.*;
 import edu.miu.elibrary.exception.RuleException;
 import edu.miu.elibrary.ruleset.RuleSet;
 import edu.miu.elibrary.ruleset.RuleSetFactory;
@@ -24,15 +24,12 @@ public class AuthorView extends javax.swing.JPanel {
     /**
      * Creates new form AuthorView
      */
-
-
     private final AuthorController auhorController;
 
     private ReloadInterface reloadInterface;
 
     {
-        DataAccessFacade dataAccessFacade = new DataAccessFacade();
-        auhorController = new AuthorController(dataAccessFacade);
+        auhorController = new AuthorController();
     }
 
 

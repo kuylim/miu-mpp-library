@@ -1,17 +1,18 @@
 package edu.miu.elibrary.controller;
 
+import edu.miu.elibrary.business.Address;
 import edu.miu.elibrary.business.LibraryMember;
-import edu.miu.elibrary.dataaccess.DataAccess;
-import edu.miu.elibrary.dataaccess.DataAccessFacade;
+import edu.miu.elibrary.dataaccess.MemberDataAccess;
+import edu.miu.elibrary.dataaccess.MemberDataAccessFacade;
 
 import java.sql.SQLException;
 
 public class MemberController {
 
-    DataAccess dataAccess;
+    MemberDataAccess dataAccess;
 
     public MemberController() {
-        dataAccess = new DataAccessFacade();
+        dataAccess = new MemberDataAccessFacade();
     }
 
     public LibraryMember add(LibraryMember mem) throws SQLException {
@@ -22,5 +23,14 @@ public class MemberController {
         LibraryMember libraryMember = new LibraryMember(firstname, lastname, phoneNumber);
         libraryMember.setAddressId(addressId);
         return dataAccess.add(libraryMember);
+    }
+
+    public Address add(Address a) throws SQLException {
+        return dataAccess.add(a);
+    }
+
+    public Address add(String street, String city, String state, String zip) {
+        Address address = new Address(street, city, state, zip);
+        return dataAccess.add(address);
     }
 }

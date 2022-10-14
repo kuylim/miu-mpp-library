@@ -3,23 +3,21 @@ package edu.miu.elibrary.controller;
 import edu.miu.elibrary.business.Author;
 import edu.miu.elibrary.business.Book;
 import edu.miu.elibrary.business.BookCopy;
-import edu.miu.elibrary.business.LibraryMember;
-import edu.miu.elibrary.dataaccess.DataAccessFacade;
+import edu.miu.elibrary.dataaccess.BookDataAccess;
+import edu.miu.elibrary.dataaccess.BookDataAccessFacade;
 
 import javax.swing.*;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public class BookController {
 
     private List<Author> authors;
     private Book book;
-    private DataAccessFacade dataAccessFacade;
+    private final BookDataAccess dataAccess;
 
-    public BookController(DataAccessFacade dataAccessFacade) {
-        this.dataAccessFacade = dataAccessFacade;
+    public BookController() {
+        this.dataAccess = new BookDataAccessFacade();
     }
 
     public List<Book> getAllBooks() {
@@ -29,7 +27,7 @@ public class BookController {
 
 
     public Book saveNewBook(Book book) throws SQLException {
-        return dataAccessFacade.saveNewBook(book);
+        return dataAccess.saveNewBook(book);
     }
 
 
@@ -41,12 +39,12 @@ public class BookController {
     }
 
     public List<Author> getAuthors() {
-        return dataAccessFacade.getAuthors();
+        return dataAccess.getAuthors();
     }
 
     public DefaultListModel<Author> getAuthorListModel() {
         DefaultListModel<Author> listModel = new DefaultListModel<>();
-        authors = dataAccessFacade.getAuthors();
+        authors = dataAccess.getAuthors();
         for (Author author : authors) {
             listModel.addElement(author);
         }
@@ -54,12 +52,12 @@ public class BookController {
     }
 
     public Book searchBy(String isbn) throws SQLException {
-        book = dataAccessFacade.searchBookBy(isbn);
+        book = dataAccess.searchBookBy(isbn);
         return book;
     }
 
     public boolean addBookCopy(int numberOfCopy) throws SQLException {
-        return dataAccessFacade.addBookCopy(book, BookCopy.setNewNumberOfCopy(numberOfCopy));
+        return dataAccess.addBookCopy(book, BookCopy.setNewNumberOfCopy(numberOfCopy));
     }
 
 

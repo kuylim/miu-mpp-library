@@ -5,6 +5,8 @@ import edu.miu.elibrary.business.LibraryMember;
 import edu.miu.elibrary.dataaccess.DataAccessFacade;
 import edu.miu.elibrary.auth.Principal;
 import edu.miu.elibrary.auth.SecurityContext;
+import edu.miu.elibrary.dataaccess.MemberDataAccess;
+import edu.miu.elibrary.dataaccess.MemberDataAccessFacade;
 
 import java.util.Objects;
 
@@ -14,10 +16,10 @@ import java.util.Objects;
  */
 public class LoginController {
 
-    private final DataAccessFacade dataAccess;
+    private final MemberDataAccess dataAccess;
 
     public LoginController() {
-        dataAccess = new DataAccessFacade();
+        dataAccess = new MemberDataAccessFacade();
     }
 
     public LibraryMember addMember(LibraryMember member) {
