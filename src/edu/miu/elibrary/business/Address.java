@@ -54,4 +54,15 @@ public class Address implements Serializable {
     public void setZip(String zip) {
         this.zip = zip;
     }
+
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("Address{");
+        sb.append("street='").append(street).append('\'');
+        sb.append(", city='").append(city).append('\'');
+        sb.append(", state='").append(state).append('\'');
+        sb.append(", zip='").append(zip).append('\'');
+        sb.append('}');
+        return sb.toString();
+    }
 }

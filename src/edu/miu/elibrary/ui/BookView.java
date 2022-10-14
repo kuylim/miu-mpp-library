@@ -5,6 +5,16 @@
 package edu.miu.elibrary.ui;
 
 import edu.miu.elibrary.business.Author;
+import edu.miu.elibrary.controller.BookController;
+import edu.miu.elibrary.dataaccess.DataAccessFacade;
+import edu.miu.elibrary.ruleset.BookViewValidateType;
+import edu.miu.elibrary.ruleset.RuleException;
+import edu.miu.elibrary.ruleset.RuleSet;
+import edu.miu.elibrary.ruleset.RuleSetFactory;
+
+import javax.swing.*;
+import java.sql.SQLException;
+import java.util.List;
 
 /**
  *
@@ -12,11 +22,22 @@ import edu.miu.elibrary.business.Author;
  */
 public class BookView extends javax.swing.JPanel {
 
+    private BookViewValidateType bookViewValidateType;
+    private final BookController bookController;
+
     /**
      * Creates new form AddBookView
      */
+
+    {
+        DataAccessFacade dataAccessFacade = new DataAccessFacade();
+        bookController = new BookController(dataAccessFacade);
+    }
     public BookView() {
         initComponents();
+        loadAuthorList();
+
+
     }
 
     /**
@@ -100,6 +121,8 @@ public class BookView extends javax.swing.JPanel {
                 btnSaveCopyActionPerformed(evt);
             }
         });
+
+        txtNumberOfCopyExist.setEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -198,26 +221,149 @@ public class BookView extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void loadAuthorList() {
+        lstAuthors.setModel(bookController.getAuthorListModel());
+    }
     private void btnAddAuthorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddAuthorActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnAddAuthorActionPerformed
 
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
         // TODO add your handling code here:
+        clearAddBookForm();
     }//GEN-LAST:event_btnClearActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         // TODO add your handling code here:
+        RuleSet bookRuleSet = RuleSetFactory.getRuleSet(BookView.this);
+        try {
+            bookViewValidateType = BookViewValidateType.BOOK_VIEW;
+            bookRuleSet.applyRules(BookView.this);
+            //if rules pass...
+            //submit data
+            try {
+                String bookTitle = bookController.createNewBook(
+                        txtIsbn.getText(),
+                        txtTitle.getText(),
+                        Integer.parseInt(txtNumberOfCopy.getText()),
+                        lstAuthors.getSelectedValuesList()
+                );
+                JOptionPane.showMessageDialog(this,bookTitle + "added successfully");
+                clearAddBookForm();
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(BookView.this,
+                        "Error: "+e.getMessage(),
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+        } catch(RuleException e) {
+            JOptionPane.showMessageDialog(BookView.this,
+                    "Error: "+e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+
+        }
+
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         // TODO add your handling code here:
+        try {
+
+            String bookTitle = bookController.searchBy(getTxtIsbnSearchText()).getTitle();
+            if (bookTitle != null) {
+                txtNumberOfCopyExist.setEnabled(true);
+            }
+            JOptionPane.showMessageDialog(this,bookTitle + "is found");
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(BookView.this,
+                    "Error: "+e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        } catch (NullPointerException e) {
+            JOptionPane.showMessageDialog(BookView.this,
+                    "Error: "+ "Book with the ISBN you have entered is not found",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+
     }//GEN-LAST:event_btnSearchActionPerformed
 
     private void btnSaveCopyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveCopyActionPerformed
         // TODO add your handling code here:
+        RuleSet bookRuleSet = RuleSetFactory.getRuleSet(BookView.this);
+        try {
+            bookViewValidateType = BookViewValidateType.BOOK_COPY_VIEW;
+            bookRuleSet.applyRules(BookView.this);
+            //if rules pass...
+            //submit data
+            try {
+                boolean update = bookController.addBookCopy(Integer.parseInt(getBookNumberOfCopyExist()));
+                if (update) {
+                    clearAddBookCopyForm();
+                    JOptionPane.showMessageDialog(this,"Add " + getBookNumberOfCopyExist() + "more successfully");
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(BookView.this,
+                        "Error: "+e.getMessage(),
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+        } catch(RuleException e) {
+            JOptionPane.showMessageDialog(BookView.this,
+                    "Error: "+e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+
+        }
     }//GEN-LAST:event_btnSaveCopyActionPerformed
 
+
+    void clearAddBookForm() {
+        txtIsbn.setText("");
+        txtNumberOfCopy.setText("");
+        txtTitle.setText("");
+        lstAuthors.clearSelection();
+    }
+
+    void clearAddBookCopyForm() {
+        txtIsbnSearch.setText("");
+        txtNumberOfCopyExist.setText("");
+        txtNumberOfCopyExist.setEnabled(false);
+    }
+
+    public BookViewValidateType getBookViewValidateType() {
+        return bookViewValidateType;
+    }
+
+    public void setBookViewValidateType(BookViewValidateType bookViewValidateType) {
+        this.bookViewValidateType = bookViewValidateType;
+    }
+
+    public String getIsbnText() {
+        return txtIsbn.getText();
+    }
+
+    public String getBookTitleText() {
+        return txtTitle.getText();
+    }
+
+    public String getBookNumberOfCopy() {
+        return txtNumberOfCopy.getText();
+    }
+
+    public String getBookNumberOfCopyExist() {
+        return txtNumberOfCopyExist.getText();
+    }
+
+    public List<Author> getAuthorSelectedList() {
+        return lstAuthors.getSelectedValuesList();
+    }
+
+    public String getTxtIsbnSearchText() {
+        return txtIsbnSearch.getText();
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddAuthor;
