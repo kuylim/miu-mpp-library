@@ -11,6 +11,7 @@ public class LibraryMember extends Person implements Serializable {
     @Serial
     private static final long serialVersionUID = -6565704637202603868L;
     private String memberId;
+    private int addressId;
     private CheckoutRecord checkoutRecord;
 
     public LibraryMember(String memberId, String firstName, String lastName, String phoneNumber) {
@@ -25,6 +26,14 @@ public class LibraryMember extends Person implements Serializable {
 
     public String getMemberId() {
         return memberId;
+    }
+
+    public long getAddressId(){
+        return addressId;
+    }
+
+    public void setAddressId(int addressId){
+        this.addressId = addressId;
     }
 
     public void setMemberId(String memberId) {
