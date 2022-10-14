@@ -4,8 +4,10 @@
  */
 package edu.miu.elibrary.ui;
 
+import edu.miu.elibrary.auth.Auth;
+import edu.miu.elibrary.auth.SecurityContext;
+
 /**
- *
  * @author Kuylim Tith
  */
 public class MainView extends javax.swing.JFrame {
@@ -14,10 +16,22 @@ public class MainView extends javax.swing.JFrame {
      */
     public MainView() {
         initComponents();
-        mainTab.addTab("Library Member", new MemberView());
-        mainTab.addTab("Book", new BookView());
-        mainTab.addTab("Checkout", new CheckoutView());
-        mainTab.addTab("Overdue", new OverdueView());
+        if (SecurityContext.principal.getAuth().equals(Auth.ADMIN)) {
+            mainTab.addTab("Library Member", new MemberView());
+            mainTab.addTab("Book", new BookView());
+        }
+
+        if (SecurityContext.principal.getAuth().equals(Auth.BOTH)) {
+            mainTab.addTab("Library Member", new MemberView());
+            mainTab.addTab("Book", new BookView());
+            mainTab.addTab("Checkout", new CheckoutView());
+            mainTab.addTab("Overdue", new OverdueView());
+        }
+
+        if (SecurityContext.principal.getAuth().equals(Auth.LIBRARIAN)) {
+            mainTab.addTab("Checkout", new CheckoutView());
+            mainTab.addTab("Overdue", new OverdueView());
+        }
         setLocationRelativeTo(null);
     }
 
@@ -37,18 +51,18 @@ public class MainView extends javax.swing.JFrame {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(mainTab, javax.swing.GroupLayout.PREFERRED_SIZE, 688, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(mainTab, javax.swing.GroupLayout.PREFERRED_SIZE, 688, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap())
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(mainTab, javax.swing.GroupLayout.DEFAULT_SIZE, 382, Short.MAX_VALUE)
-                .addContainerGap())
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(mainTab, javax.swing.GroupLayout.DEFAULT_SIZE, 382, Short.MAX_VALUE)
+                                .addContainerGap())
         );
 
         pack();
@@ -62,7 +76,7 @@ public class MainView extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
