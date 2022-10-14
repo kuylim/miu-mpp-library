@@ -36,8 +36,6 @@ public class BookView extends javax.swing.JPanel {
     public BookView() {
         initComponents();
         loadAuthorList();
-
-
     }
 
     /**
@@ -232,18 +230,28 @@ public class BookView extends javax.swing.JPanel {
     }
     private void btnAddAuthorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddAuthorActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnAddAuthorActionPerformed
+    }
 
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
-        // TODO add your handling code here:
         clearAddBookForm();
-    }//GEN-LAST:event_btnClearActionPerformed
+    }
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        // TODO add your handling code here:
+        this.addBook();
+    }
+
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+        searchBook();
+    }
+
+    private void btnSaveCopyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveCopyActionPerformed
+        addBookCopy();
+    }//GEN-LAST:event_btnSaveCopyActionPerformed
+
+    void addBook() {
         RuleSet bookRuleSet = RuleSetFactory.getRuleSet(BookView.this);
         try {
-            bookViewValidateType = BookViewValidateType.BOOK_VIEW;
+            this.setBookViewValidateType(BookViewValidateType.BOOK_VIEW);
             bookRuleSet.applyRules(BookView.this);
             //if rules pass...
             //submit data
@@ -269,38 +277,12 @@ public class BookView extends javax.swing.JPanel {
                     JOptionPane.ERROR_MESSAGE);
 
         }
+    }
 
-    }//GEN-LAST:event_btnSaveActionPerformed
-
-    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
-        // TODO add your handling code here:
-        try {
-
-            String bookTitle = bookController.searchBy(getTxtIsbnSearchText()).getTitle();
-            if (bookTitle != null) {
-                txtNumberOfCopyExist.setEnabled(true);
-            }
-            JOptionPane.showMessageDialog(this,bookTitle + "is found");
-
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(BookView.this,
-                    "Error: "+e.getMessage(),
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
-        } catch (NullPointerException e) {
-            JOptionPane.showMessageDialog(BookView.this,
-                    "Error: "+ "Book with the ISBN you have entered is not found",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
-        }
-
-    }//GEN-LAST:event_btnSearchActionPerformed
-
-    private void btnSaveCopyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveCopyActionPerformed
-        // TODO add your handling code here:
+    void addBookCopy() {
         RuleSet bookRuleSet = RuleSetFactory.getRuleSet(BookView.this);
         try {
-            bookViewValidateType = BookViewValidateType.BOOK_COPY_VIEW;
+            setBookViewValidateType(BookViewValidateType.BOOK_COPY_VIEW);
             bookRuleSet.applyRules(BookView.this);
             //if rules pass...
             //submit data
@@ -323,8 +305,28 @@ public class BookView extends javax.swing.JPanel {
                     JOptionPane.ERROR_MESSAGE);
 
         }
-    }//GEN-LAST:event_btnSaveCopyActionPerformed
+    }
 
+    void searchBook() {
+        try {
+            String bookTitle = bookController.searchBy(getTxtIsbnSearchText()).getTitle();
+            if (bookTitle != null) {
+                txtNumberOfCopyExist.setEnabled(true);
+            }
+            JOptionPane.showMessageDialog(this,bookTitle + "is found");
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(BookView.this,
+                    "Error: "+e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        } catch (NullPointerException e) {
+            JOptionPane.showMessageDialog(BookView.this,
+                    "Error: "+ "Book with the ISBN you have entered is not found",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
     void clearAddBookForm() {
         txtIsbn.setText("");

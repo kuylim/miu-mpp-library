@@ -38,7 +38,6 @@ public class MemberRepository {
                 int i = re.getInt(1);
                 member.setMemberId(i);
             }
-            conn.close();
             return member;
         } catch (SQLException ex) {
             ex.printStackTrace();

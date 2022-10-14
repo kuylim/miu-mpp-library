@@ -35,14 +35,7 @@ public class BookController {
 
     public String createNewBook(String isbn, String title, int numberOfCopy, List<Author> author) throws SQLException {
         Book book = new Book(isbn, title, numberOfCopy, author);
-        List<BookCopy> bookCopies = new ArrayList<>();
-        for(int i = 1; i <= numberOfCopy; i++) {
-            BookCopy bookCopy = new BookCopy();
-            bookCopy.setCopyNumber(UUID.randomUUID().toString());
-            bookCopy.setStatus("A");
-            bookCopies.add(bookCopy);
-        }
-        book.setBookCopies(bookCopies);
+        book.setBookCopies(numberOfCopy);
         Book result = saveNewBook(book);
         return result.getTitle();
     }
@@ -66,14 +59,7 @@ public class BookController {
     }
 
     public boolean addBookCopy(int numberOfCopy) throws SQLException {
-        List<BookCopy> newBookCopies = new ArrayList<>();
-        for(int i = 1; i <= numberOfCopy; i++) {
-            BookCopy bookCopy = new BookCopy();
-            bookCopy.setCopyNumber(UUID.randomUUID().toString());
-            bookCopy.setStatus("A");
-            newBookCopies.add(bookCopy);
-        }
-        return dataAccessFacade.addBookCopy(book, newBookCopies);
+        return dataAccessFacade.addBookCopy(book, BookCopy.setNewNumberOfCopy(numberOfCopy));
     }
 
 
