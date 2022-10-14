@@ -11,16 +11,31 @@ import java.time.LocalDate;
 public class CheckoutRecordEntry implements Serializable {
     @Serial
     private static final long serialVersionUID = 4950189816707298711L;
+    private int id;
     private LocalDate checkoutDate;
     private LocalDate dueDate;
     private BookCopy bookCopy;
-    
-    public CheckoutRecordEntry() {}
 
-    public CheckoutRecordEntry(LocalDate checkoutDate, LocalDate dueDate, BookCopy bookCopy) {
+    public CheckoutRecordEntry() {
+    }
+
+    public CheckoutRecordEntry(int id) {
+        this.id = id;
+    }
+
+    public CheckoutRecordEntry(int id, LocalDate checkoutDate, LocalDate dueDate, BookCopy bookCopy) {
+        this.id = id;
         this.checkoutDate = checkoutDate;
         this.dueDate = dueDate;
         this.bookCopy = bookCopy;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public LocalDate getCheckoutDate() {

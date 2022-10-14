@@ -12,6 +12,8 @@ public class Book implements Serializable {
 
     @Serial
     private static final long serialVersionUID = -974228997834827410L;
+
+    private int id;
     private String isbn;
     private String title;
     private int numberOfCopy;
@@ -19,11 +21,27 @@ public class Book implements Serializable {
     private List<Author> authors;
     private List<BookCopy> bookCopies;
 
+    public Book(int id, String isbn, String title, int numberOfCopy, int maxCheckoutLength) {
+        this.id = id;
+        this.isbn = isbn;
+        this.title = title;
+        this.numberOfCopy = numberOfCopy;
+        this.maxCheckoutLength = maxCheckoutLength;
+    }
+
     public Book(String isbn, String title, int numberOfCopy, List<Author> authors) {
         this.isbn = isbn;
         this.title = title;
         this.numberOfCopy = numberOfCopy;
         this.authors = authors;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getIsbn() {

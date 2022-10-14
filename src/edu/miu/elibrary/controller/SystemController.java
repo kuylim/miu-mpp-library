@@ -68,7 +68,7 @@ public class SystemController {
 
     public LibraryMember createLibraryMember(String firstName, String lastName, String phoneNumber) {
         String id = String.valueOf(libraryMembers.size() + 1 + 1000);
-        return new LibraryMember(id, firstName, lastName, phoneNumber);
+        return new LibraryMember(0, firstName, lastName, phoneNumber);
     }
 
     public void addLibraryMember(LibraryMember member) {
