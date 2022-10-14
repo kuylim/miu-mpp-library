@@ -69,13 +69,14 @@ public class DataAccessFacade implements DataAccess {
 
     @Override
     public BookCopy findAvailableBookCopyByBook(int bookId) {
-        String sqlCommand = "SELECT bc.book_id, bc.copy_number, bc.status FROM tb_book_copy bc WHERE bc.book_id = ? and bc.status = 'A' LIMIT 1";
+        String sqlCommand = "SELECT bc.id, bc.copy_number, bc.status FROM tb_book_copy bc" +
+                " WHERE bc.book_id = ? and bc.status = 'A' LIMIT 1";
         try {
             preparedStatement = connection.prepareStatement(sqlCommand);
             preparedStatement.setInt(1, bookId);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                return new BookCopy(resultSet.getInt("book_id"), resultSet.getString("copy_number"),
+                return new BookCopy(resultSet.getInt("id"), resultSet.getString("copy_number"),
                         resultSet.getString("status"));
             }
         } catch (Exception ex) {
@@ -110,15 +111,16 @@ public class DataAccessFacade implements DataAccess {
             preparedStatement.setInt(1, memberId);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                // todo inner join with book
-                sqlCommand = "SELECT en.id, en.checkout_date, en.due_date, en.book_copy_id FROM tb_checkout_entry en WHERE en.id = ?";
+                sqlCommand = "SELECT en.id, en.checkout_date, en.due_date, en.book_copy_id, bc.copy_number FROM tb_checkout_entry en" +
+                        " INNER JOIN tb_book_copy bc ON en.book_copy_id = bc.id WHERE en.id = ?";
                 preparedStatement = connection.prepareStatement(sqlCommand);
                 preparedStatement.setInt(1, resultSet.getInt("checkout_entry_id"));
                 ResultSet subResult = preparedStatement.executeQuery();
                 while (subResult.next()) {
                     checkoutRecordEntries.add(new CheckoutRecordEntry(subResult.getInt("id"),
                             LocalDate.parse(subResult.getString("checkout_date"), formatter),
-                            LocalDate.parse(subResult.getString("due_date"), formatter), null));
+                            LocalDate.parse(subResult.getString("due_date"), formatter),
+                            new BookCopy(subResult.getString("copy_number"))));
                 }
             }
             CheckoutRecord checkoutRecord = new CheckoutRecord();

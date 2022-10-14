@@ -4,6 +4,7 @@
  */
 package edu.miu.elibrary.ui;
 
+import edu.miu.elibrary.business.CheckoutRecord;
 import edu.miu.elibrary.controller.CheckoutController;
 import edu.miu.elibrary.exception.BookCheckoutException;
 
@@ -144,7 +145,12 @@ public class CheckoutView extends javax.swing.JPanel {
     }//GEN-LAST:event_btnCheckoutActionPerformed
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
-        // TODO add your handling code here:
+        try {
+            CheckoutRecord checkoutRecord = checkoutController.findCheckoutRecord(Integer.parseInt(txtMemberIdSearch.getText()));
+            textInfo.setText(checkoutRecord.getCheckoutRecordEntries().toString());
+        } catch (BookCheckoutException ex) {
+            JOptionPane.showMessageDialog(CheckoutView.this, ex.getMessage());
+        }
     }//GEN-LAST:event_btnSearchActionPerformed
 
 

@@ -42,4 +42,13 @@ public class CheckoutController {
         dataAccess.setBookCopyToBorrowed(bookCopy.getId());
         return true;
     }
+
+    public CheckoutRecord findCheckoutRecord(int memberId) {
+        LibraryMember libraryMember = dataAccess.findLibraryMemberById(memberId);
+        if (Objects.isNull(libraryMember)) {
+            throw new BookCheckoutException("Library member not found");
+        }
+
+        return dataAccess.findCheckoutRecord(memberId);
+    }
 }

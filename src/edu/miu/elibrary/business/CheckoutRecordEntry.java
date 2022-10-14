@@ -61,4 +61,15 @@ public class CheckoutRecordEntry implements Serializable {
     public void setBookCopy(BookCopy bookCopy) {
         this.bookCopy = bookCopy;
     }
+
+    public String getOverdue() {
+        if (LocalDate.now().isAfter(this.dueDate)) return "Yes";
+        return "No";
+    }
+
+    @Override
+    public String toString() {
+        return "Book copy number: " + bookCopy.getCopyNumber() + ", Checkout Date: " + checkoutDate
+                + ", Due date: " + dueDate + ", Is overdue: " + getOverdue() + "\n";
+    }
 }
