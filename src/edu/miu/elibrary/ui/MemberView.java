@@ -17,16 +17,16 @@ import java.sql.SQLException;
 public class MemberView extends javax.swing.JPanel {
 
     private static final String EMPTY = "";
-    private final MemberController member;
-    private final AddressController address;
+    private final MemberController memberController;
+    private final AddressController addressController;
 
     /**
      * Creates new form AddMemberView
      */
     public MemberView() {
         initComponents();
-        address = new AddressController();
-        member = new MemberController();
+        addressController = new AddressController();
+        memberController = new MemberController();
 
 
         //controller.loadAllLibraryMember();
@@ -191,11 +191,11 @@ public class MemberView extends javax.swing.JPanel {
 
     public void saveLibraryMember() throws SQLException {
         Address address = new Address(txtStreet.getText(), txtCity.getText(), txtState.getText(), txtZip.getText());
-        this.address.add(address);
+        this.addressController.add(address);
 
         LibraryMember member = new LibraryMember(txtFirstName.getText(), txtLastname.getText(), txtPhoneNumber.getText());
         member.setAddressId((int) address.getId());
-        this.member.add(member);
+        this.memberController.add(member);
 
         if (member.getMemberId() > 0) {
             clearLibraryMemberForm();
