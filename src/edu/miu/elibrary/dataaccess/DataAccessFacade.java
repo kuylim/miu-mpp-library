@@ -37,6 +37,53 @@ public class DataAccessFacade implements DataAccess {
     }
 
     @Override
+    public Address add(Address address) {
+        try {
+            String query = "INSERT INTO tb_address (street, city, state, zip) VALUES (?,?,?,?)";
+
+            preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setString(1, address.getStreet());
+            preparedStatement.setString(2, address.getCity());
+            preparedStatement.setString(3, address.getState());
+            preparedStatement.setString(4, address.getZip());
+            preparedStatement.executeUpdate();
+
+            ResultSet re = preparedStatement.getGeneratedKeys();
+            if (re.next()) {
+                address.setId(re.getInt(1));
+            }
+            return address;
+        } catch (SQLException s) {
+            s.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public LibraryMember add(LibraryMember member) {
+        try {
+            String query = "INSERT INTO tb_library_member (firstname, lastname, phonenumber, address_id) VALUES(?,?,?,?)";
+
+            preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setString(1, member.getFirstName());
+            preparedStatement.setString(2, member.getLastName());
+            preparedStatement.setString(3, member.getPhoneNumber());
+            preparedStatement.setInt(4, member.getAddressId());
+            preparedStatement.executeUpdate();
+
+            ResultSet re = preparedStatement.getGeneratedKeys();
+            if (re.next()) {
+                int i = re.getInt(1);
+                member.setMemberId(i);
+            }
+            return member;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
     public User findUserByUsername(String username) {
         String sqlCommand = "SELECT u.username, u.auth, u.password FROM tb_user u WHERE u.username = ?";
         try {
@@ -191,49 +238,48 @@ public class DataAccessFacade implements DataAccess {
 
     @Override
     public Book saveNewBook(Book book) throws SQLException {
-            String insert_book_statement = "INSERT INTO tb_book "
-                    + "(isbn, title, number_of_copy, max_checkout_length) "
-                    + "VALUES(?, ?, ?, ?)";
+        String insert_book_statement = "INSERT INTO tb_book "
+                + "(isbn, title, number_of_copy, max_checkout_length) "
+                + "VALUES(?, ?, ?, ?)";
 
-            String insert_author_book = "INSERT INTO tb_author_book "
-                    + "(author_id, book_id) "
-                    + "VALUES(?, ?)";
+        String insert_author_book = "INSERT INTO tb_author_book "
+                + "(author_id, book_id) "
+                + "VALUES(?, ?)";
 
         String insert_book_copy = "INSERT INTO tb_book_copy "
                 + "(book_id, copy_number,status) "
                 + "VALUES(?, ?, ?)";
 
-            preparedStatement = connection.prepareStatement(insert_book_statement, java.sql.Statement.RETURN_GENERATED_KEYS);
-            preparedStatement.setString(1, book.getIsbn());
-            preparedStatement.setString(2, book.getTitle());
-            preparedStatement.setInt(3, book.getNumberOfCopy());
-            preparedStatement.setInt(4, book.getMaxCheckoutLength());
+        preparedStatement = connection.prepareStatement(insert_book_statement, java.sql.Statement.RETURN_GENERATED_KEYS);
+        preparedStatement.setString(1, book.getIsbn());
+        preparedStatement.setString(2, book.getTitle());
+        preparedStatement.setInt(3, book.getNumberOfCopy());
+        preparedStatement.setInt(4, book.getMaxCheckoutLength());
 
-            preparedStatement.executeUpdate();
+        preparedStatement.executeUpdate();
 
-            try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    for (Author author: book.getAuthors()) {
-                        preparedStatement = connection.prepareStatement(insert_author_book);
-                        preparedStatement.setInt(1, author.getId());
-                        preparedStatement.setInt(2, generatedKeys.getInt(1));
-                        preparedStatement.executeUpdate();
-                    }
-
-                    for (BookCopy bookCopy: book.getBookCopies()) {
-                        preparedStatement = connection.prepareStatement(insert_book_copy);
-                        preparedStatement.setInt(1, generatedKeys.getInt(1));
-                        preparedStatement.setString(2, bookCopy.getCopyNumber());
-                        preparedStatement.setString(3, bookCopy.getStatus());
-                        preparedStatement.executeUpdate();
-                    }
+        try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
+            if (generatedKeys.next()) {
+                for (Author author : book.getAuthors()) {
+                    preparedStatement = connection.prepareStatement(insert_author_book);
+                    preparedStatement.setInt(1, author.getId());
+                    preparedStatement.setInt(2, generatedKeys.getInt(1));
+                    preparedStatement.executeUpdate();
                 }
-                else {
-                    throw new SQLException("Creating book failed, no ID obtained.");
+
+                for (BookCopy bookCopy : book.getBookCopies()) {
+                    preparedStatement = connection.prepareStatement(insert_book_copy);
+                    preparedStatement.setInt(1, generatedKeys.getInt(1));
+                    preparedStatement.setString(2, bookCopy.getCopyNumber());
+                    preparedStatement.setString(3, bookCopy.getStatus());
+                    preparedStatement.executeUpdate();
                 }
+            } else {
+                throw new SQLException("Creating book failed, no ID obtained.");
             }
+        }
 
-            return book;
+        return book;
     }
 
     @Override
@@ -245,7 +291,7 @@ public class DataAccessFacade implements DataAccess {
         try {
             preparedStatement = connection.prepareStatement(sql);
             ResultSet resultSet = preparedStatement.executeQuery();
-            while(resultSet.next()) {
+            while (resultSet.next()) {
                 int id = resultSet.getInt(1);
                 String firstName = resultSet.getString(2);
                 String lastName = resultSet.getString(3);
@@ -255,7 +301,7 @@ public class DataAccessFacade implements DataAccess {
                 preparedStatement.setInt(1, addressId);
                 ResultSet addressResultSet = preparedStatement.executeQuery();
 
-                while(addressResultSet.next()) {
+                while (addressResultSet.next()) {
                     String street = addressResultSet.getString(2);
                     String city = addressResultSet.getString(3);
                     String state = addressResultSet.getString(4);
@@ -263,7 +309,7 @@ public class DataAccessFacade implements DataAccess {
                     Address address = new Address(street, city, state, zip);
                     System.out.println(address);
 
-                    Author author = new Author(firstName, lastName, phoneNumber,address);
+                    Author author = new Author(firstName, lastName, phoneNumber, address);
                     author.setId(id);
                     authors.add(author);
                 }
@@ -331,7 +377,7 @@ public class DataAccessFacade implements DataAccess {
         preparedStatement.setInt(2, book.getId());
         preparedStatement.executeUpdate();
 
-        for (BookCopy bookCopy: newBookCopies) {
+        for (BookCopy bookCopy : newBookCopies) {
             preparedStatement = connection.prepareStatement(insert_book_copy);
             preparedStatement.setInt(1, book.getId());
             preparedStatement.setString(2, bookCopy.getCopyNumber());
@@ -382,8 +428,7 @@ public class DataAccessFacade implements DataAccess {
                 preparedStatement.setInt(4, generatedKeys.getInt(1));
                 preparedStatement.executeUpdate();
                 return true;
-            }
-            else {
+            } else {
                 throw new SQLException("Creating address failed, no ID obtained.");
             }
         }

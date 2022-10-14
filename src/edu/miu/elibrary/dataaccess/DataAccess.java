@@ -15,6 +15,10 @@ import java.util.List;
 
 public interface DataAccess {
 
+    Address add(Address address);
+
+    LibraryMember add(LibraryMember member);
+
     User findUserByUsername(String username);
 
     Book findBookByIsbn(String isbn);
@@ -31,12 +35,12 @@ public interface DataAccess {
 
     void setBookCopyToBorrowed(int id);
 
-
     Book saveNewBook(Book book) throws SQLException;
 
     Book searchBookBy(String isbn) throws SQLException;
 
     boolean addBookCopy(Book book, List<BookCopy> bookCopies) throws SQLException;
+
     List<Author> getAuthors();
 
     boolean addAuthor(Author author) throws SQLException;

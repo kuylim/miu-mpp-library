@@ -1,25 +1,25 @@
 package edu.miu.elibrary.controller;
 
 import edu.miu.elibrary.business.Address;
-import edu.miu.elibrary.dataaccess.AddressRepository;
-import edu.miu.elibrary.dataaccess.iml.AddressRepositoryImpl;
+import edu.miu.elibrary.dataaccess.DataAccess;
+import edu.miu.elibrary.dataaccess.DataAccessFacade;
 
 import java.sql.SQLException;
 
 public class AddressController {
-    private final AddressRepository addressRepository;
+    private final DataAccess dataAccess;
 
     public AddressController(){
-        addressRepository = new AddressRepositoryImpl();
+        dataAccess = new DataAccessFacade();
     }
 
     public Address add(Address a) throws SQLException {
-        return addressRepository.add(a);
+        return dataAccess.add(a);
     }
 
     public Address add(String street, String city, String state, String zip) {
         Address address = new Address(street, city, state, zip);
-        return addressRepository.add(address);
+        return dataAccess.add(address);
     }
 
 }
