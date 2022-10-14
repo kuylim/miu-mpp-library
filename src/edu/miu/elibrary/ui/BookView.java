@@ -276,7 +276,7 @@ public class BookView extends javax.swing.JPanel  implements  ReloadInterface{
                         lstAuthors.getSelectedValuesList(),
                         Integer.parseInt(getTxtMaxCheckoutLength())
                 );
-                JOptionPane.showMessageDialog(this,bookTitle + "added successfully");
+                JOptionPane.showMessageDialog(this,bookTitle + " added successfully");
                 clearAddBookForm();
             } catch (SQLException e) {
                 JOptionPane.showMessageDialog(BookView.this,
@@ -304,7 +304,7 @@ public class BookView extends javax.swing.JPanel  implements  ReloadInterface{
                 boolean update = bookController.addBookCopy(Integer.parseInt(getBookNumberOfCopyExist()));
                 if (update) {
                     clearAddBookCopyForm();
-                    JOptionPane.showMessageDialog(this,"Add " + getBookNumberOfCopyExist() + "more successfully");
+                    JOptionPane.showMessageDialog(this,"Add " + getBookNumberOfCopyExist() + " more successfully");
                 }
             } catch (SQLException e) {
                 JOptionPane.showMessageDialog(BookView.this,
@@ -327,7 +327,7 @@ public class BookView extends javax.swing.JPanel  implements  ReloadInterface{
             if (bookTitle != null) {
                 txtNumberOfCopyExist.setEnabled(true);
             }
-            JOptionPane.showMessageDialog(this,bookTitle + "is found");
+            JOptionPane.showMessageDialog(this,bookTitle + " is found");
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(BookView.this,

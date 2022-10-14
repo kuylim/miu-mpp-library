@@ -242,7 +242,7 @@ public class AuthorView extends javax.swing.JPanel {
                                 getTxtState(),
                                 getTxtZip())
                 );
-                if (isSuccess) JOptionPane.showMessageDialog(this,getTxtFirstName() + " " + getTxtLastname() + "added successfully");
+                if (isSuccess) JOptionPane.showMessageDialog(this,getTxtFirstName() + " " + getTxtLastname() + " added successfully");
                 reloadInterface.reload();
                 resetForm();
             } catch (SQLException e) {
