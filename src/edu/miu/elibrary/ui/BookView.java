@@ -7,8 +7,8 @@ package edu.miu.elibrary.ui;
 import edu.miu.elibrary.business.Author;
 import edu.miu.elibrary.controller.BookController;
 import edu.miu.elibrary.dataaccess.DataAccessFacade;
-import edu.miu.elibrary.ruleset.BookViewValidateType;
-import edu.miu.elibrary.ruleset.RuleException;
+import edu.miu.elibrary.exception.BookViewValidateType;
+import edu.miu.elibrary.exception.RuleException;
 import edu.miu.elibrary.ruleset.RuleSet;
 import edu.miu.elibrary.ruleset.RuleSetFactory;
 

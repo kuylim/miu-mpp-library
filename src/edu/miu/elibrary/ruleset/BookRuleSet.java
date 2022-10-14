@@ -1,5 +1,7 @@
 package edu.miu.elibrary.ruleset;
 
+import edu.miu.elibrary.exception.BookViewValidateType;
+import edu.miu.elibrary.exception.RuleException;
 import edu.miu.elibrary.ui.BookView;
 
 import java.awt.*;

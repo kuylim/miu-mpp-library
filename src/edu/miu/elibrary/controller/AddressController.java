@@ -2,6 +2,7 @@ package edu.miu.elibrary.controller;
 
 import edu.miu.elibrary.business.Address;
 import edu.miu.elibrary.dataaccess.AddressRepository;
+import edu.miu.elibrary.dataaccess.iml.AddressRepositoryImpl;
 
 import java.sql.SQLException;
 
@@ -9,7 +10,7 @@ public class AddressController {
     private final AddressRepository addressRepository;
 
     public AddressController(){
-        addressRepository = new AddressRepository();
+        addressRepository = new AddressRepositoryImpl();
     }
 
     public Address add(Address a) throws SQLException {

@@ -2,6 +2,7 @@ package edu.miu.elibrary.controller;
 
 import edu.miu.elibrary.business.LibraryMember;
 import edu.miu.elibrary.dataaccess.MemberRepository;
+import edu.miu.elibrary.dataaccess.iml.MemberRepositoryImpl;
 
 import java.sql.SQLException;
 
@@ -10,7 +11,7 @@ public class MemberController {
     MemberRepository memberRepository;
 
     public MemberController() {
-        memberRepository = new MemberRepository();
+        memberRepository = new MemberRepositoryImpl();
     }
 
     public LibraryMember add(LibraryMember mem) throws SQLException {

@@ -1,4 +1,4 @@
-package edu.miu.elibrary.ruleset;
+package edu.miu.elibrary.exception;
 
 @SuppressWarnings("serial")
 final public class RuleException extends Exception {
