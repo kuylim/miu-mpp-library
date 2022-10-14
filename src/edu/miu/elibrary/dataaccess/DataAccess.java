@@ -27,7 +27,7 @@ public interface DataAccess {
 
     CheckoutRecordEntry saveCheckoutEntry(LocalDate checkoutDate, LocalDate dueDate, BookCopy bookCopy);
 
-    CheckoutRecord saveCheckoutRecord(int memberId, int checkoutEntryId);
+    void saveCheckoutRecord(int memberId, int checkoutEntryId);
 
     void setBookCopyToBorrowed(int id);
 
