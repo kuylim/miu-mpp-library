@@ -11,6 +11,8 @@ public class Address implements Serializable {
 
     @Serial
     private static final long serialVersionUID = -3956258111143899194L;
+
+    private long id;
     private String street;
     private String city;
     private String state;
@@ -23,6 +25,9 @@ public class Address implements Serializable {
         this.zip = zip;
     }
 
+    public long getId(){
+        return id;
+    }
     public String getStreet() {
         return street;
     }
@@ -47,11 +52,26 @@ public class Address implements Serializable {
         this.state = state;
     }
 
+    public void setId(long id)
+    {
+        this.id = id;
+    }
     public String getZip() {
         return zip;
     }
 
     public void setZip(String zip) {
         this.zip = zip;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("Address{");
+        sb.append("street='").append(street).append('\'');
+        sb.append(", city='").append(city).append('\'');
+        sb.append(", state='").append(state).append('\'');
+        sb.append(", zip='").append(zip).append('\'');
+        sb.append('}');
+        return sb.toString();
     }
 }

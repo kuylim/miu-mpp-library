@@ -34,6 +34,7 @@ public class Book implements Serializable {
         this.title = title;
         this.numberOfCopy = numberOfCopy;
         this.authors = authors;
+        this.maxCheckoutLength = 21;
     }
 
     public int getId() {

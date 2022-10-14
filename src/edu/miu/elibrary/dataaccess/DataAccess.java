@@ -4,6 +4,12 @@ import edu.miu.elibrary.auth.User;
 import edu.miu.elibrary.business.*;
 
 import java.time.LocalDate;
+import edu.miu.elibrary.business.Author;
+import edu.miu.elibrary.business.Book;
+import edu.miu.elibrary.business.BookCopy;
+
+import java.sql.SQLException;
+import java.util.List;
 
 public interface DataAccess {
 
@@ -22,4 +28,13 @@ public interface DataAccess {
     CheckoutRecord saveCheckoutRecord(int memberId, int checkoutEntryId);
 
     void setBookCopyToBorrowed(int id);
+
+
+    Book saveNewBook(Book book) throws SQLException;
+
+    Book searchBookBy(String isbn) throws SQLException;
+
+    boolean addBookCopy(Book book, List<BookCopy> bookCopies) throws SQLException;
+    List<Author> getAuthors();
+
 }

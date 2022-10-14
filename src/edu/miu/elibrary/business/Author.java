@@ -3,6 +3,7 @@ package edu.miu.elibrary.business;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Author: Kuylim TITH
@@ -12,20 +13,20 @@ public class Author extends Person implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 624504775983828982L;
-    private String quote;
+
+    private int id;
     private List<Book> books;
 
-    public Author(String firstName, String lastName, String phone, Address address, String quote) {
+    public Author(String firstName, String lastName, String phone, Address address) {
         super(firstName, lastName, phone, address);
-        this.quote = quote;
     }
 
-    public String getQuote() {
-        return quote;
+    public int getId() {
+        return id;
     }
 
-    public void setQuote(String quote) {
-        this.quote = quote;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public List<Book> getBooks() {
@@ -34,5 +35,10 @@ public class Author extends Person implements Serializable {
 
     public void setBooks(List<Book> books) {
         this.books = books;
+    }
+
+    @Override
+    public String toString() {
+        return getFirstName() + " " + getLastName();
     }
 }

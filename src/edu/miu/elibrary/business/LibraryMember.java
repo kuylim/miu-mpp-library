@@ -10,15 +10,18 @@ import java.io.Serializable;
 public class LibraryMember extends Person implements Serializable {
     @Serial
     private static final long serialVersionUID = -6565704637202603868L;
+    private int addressId;
 
     private int memberId;
     private CheckoutRecord checkoutRecord;
 
-
-
     public LibraryMember(int memberId, String firstName, String lastName, String phoneNumber) {
         super(firstName, lastName, phoneNumber);
         this.memberId = memberId;
+    }
+
+    public LibraryMember(String firstName, String lastName, String phoneNumber) {
+        super(firstName, lastName, phoneNumber);
     }
 
     public LibraryMember(int memberId, String firstName, String lastName, String phoneNumber, Address address) {
@@ -40,6 +43,14 @@ public class LibraryMember extends Person implements Serializable {
 
     public void setCheckoutRecord(CheckoutRecord checkoutRecord) {
         this.checkoutRecord = checkoutRecord;
+    }
+
+    public int getAddressId() {
+        return addressId;
+    }
+
+    public void setAddressId(int addressId) {
+        this.addressId = addressId;
     }
 
     @Override
