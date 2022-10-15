@@ -50,9 +50,7 @@ public class OverdueView extends javax.swing.JPanel {
         });
 
         tbBookOverdue.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                tableData
-            },
+                tableData,
             new String [] {
                 "ISBN", "Book Title", "Copy Number", "Borrow By", "Due Date", "Overdue"
             }
@@ -100,7 +98,7 @@ public class OverdueView extends javax.swing.JPanel {
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         tableData = overdueController.findOverdueBooksCheckout(txtIsbn.getText());
-        if(Objects.equals(tableData, new Object[][]{{}})) {
+        if(Objects.equals(tableData, null)) {
             JOptionPane.showMessageDialog(this, "No overdue for this book.");
         }
         tbBookOverdue.setModel(new javax.swing.table.DefaultTableModel(

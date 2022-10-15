@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class CheckoutDataAccessFacade extends  DataAccessFacade implements CheckoutDataAccess{
+public class CheckoutDataAccessFacade extends DataAccessFacade implements CheckoutDataAccess {
     @Override
     public Book findBookByIsbn(String isbn) {
         String sqlCommand = "SELECT b.id, b.isbn, b.title, b.number_of_copy, b.max_checkout_length FROM tb_book b WHERE b.isbn = ?";
@@ -144,12 +144,12 @@ public class CheckoutDataAccessFacade extends  DataAccessFacade implements Check
         try {
             LocalDate dueDate = LocalDate.parse(resultSet.getString("due_date"), formatter);
             if (LocalDate.now().isAfter(dueDate)) {
-                return null;
+                return new BookOverdue(resultSet.getString("isbn"),
+                        resultSet.getString("title"), resultSet.getString("copy_number"),
+                        (resultSet.getString("firstname") + " " + resultSet.getString("lastname")),
+                        dueDate, "Yes");
             }
-            return new BookOverdue(resultSet.getString("isbn"),
-                    resultSet.getString("title"), resultSet.getString("copy_number"),
-                    (resultSet.getString("firstname") + " " + resultSet.getString("lastname")),
-                    dueDate, "Yes");
+            return null;
         } catch (Exception ex) {
             ex.printStackTrace();
         }

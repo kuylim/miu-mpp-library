@@ -21,7 +21,7 @@ public class OverdueController {
     }
 
     public Object[][] findOverdueBooksCheckout(String isbn) {
-        Object[][] tableData = new Object[][]{{}};
+        Object[][] tableData = null;
         List<BookOverdue> bookOverdues = dataAccess.findOverdueBooksCheckout(isbn);
         if (Objects.isNull(bookOverdues) || bookOverdues.isEmpty()) {
             return tableData;
