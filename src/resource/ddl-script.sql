@@ -72,7 +72,6 @@ CREATE TABLE `tb_library_member` (
                                      `lastname` varchar(100) DEFAULT NULL,
                                      `phonenumber` varchar(45) DEFAULT NULL,
                                      `address_id` int DEFAULT NULL,
-                                     `checkout_id` int DEFAULT NULL,
                                      PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3
 

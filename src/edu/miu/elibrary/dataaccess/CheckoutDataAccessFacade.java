@@ -149,7 +149,10 @@ public class CheckoutDataAccessFacade extends DataAccessFacade implements Checko
                         (resultSet.getString("firstname") + " " + resultSet.getString("lastname")),
                         dueDate, "Yes");
             }
-            return null;
+            return new BookOverdue(resultSet.getString("isbn"),
+                    resultSet.getString("title"), resultSet.getString("copy_number"),
+                    (resultSet.getString("firstname") + " " + resultSet.getString("lastname")),
+                    dueDate, "No");
         } catch (Exception ex) {
             ex.printStackTrace();
         }
